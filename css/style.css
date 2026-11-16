@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-family: 'Shantell Sans';
 }
 
 body {
@@ -49,7 +50,6 @@ body {
 }
 
 .unab-icon {
-    background: #f36b13;
     color: white;
     font-size: 27px;
     width: 39px;
@@ -58,6 +58,11 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 6px;
+}
+
+.logo-img {
+    height: 2rem;
+    
 }
 
 .unab-logo strong {
@@ -113,6 +118,11 @@ body {
 .notification {
     font-size: 23px;
     position: relative;
+}
+
+.notificacion-logo {
+    height: 1.3rem;
+    filter: brightness(0) saturate(100%) invert(18%) sepia(83%) saturate(4285%) hue-rotate(261deg) brightness(82%) contrast(98%);
 }
 
 .notification span {
@@ -305,6 +315,10 @@ body {
 }
 
 .hero-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 0;
     right: 0;
@@ -331,7 +345,8 @@ body {
     display: block;
     height: 3px;
     width: 90px;
-    margin-top: 17px;
+    margin-top: 10px;
+    margin-bottom: 35px;
     background: #ff8b18;
     transform: rotate(-15deg);
 }
