@@ -1,0 +1,5 @@
+.service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.service-card{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid #f0edf7;border-radius:13px;text-decoration:none;background:#fff;transition:.2s}.service-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.service-icon,.notice-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;flex-shrink:0;font-size:18px}
+.service-card h3{margin:0;font-size:11px}.service-card p{margin:4px 0 0;color:#8b94aa;font-size:9px}.service-card>b{margin-left:auto;color:#7142bf}
+.recommend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.recommend-card{display:flex;overflow:hidden;border-radius:15px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}.recommend-card img{width:42%;object-fit:cover}.recommend-card>div{padding:14px}.recommend-card h3{font-size:13px;margin:5px 0}.recommend-card p{font-size:10px;color:#8792aa}.recommend-card .outline-button{margin-top:5px}

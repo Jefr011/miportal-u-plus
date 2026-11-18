@@ -1,0 +1,14 @@
+.schedule-layout{grid-template-columns:minmax(0,1.8fr) minmax(230px,.8fr)}
+.week-grid{display:grid;grid-template-columns:55px repeat(5,minmax(65px,1fr));border:1px solid #eeeaf6;border-radius:12px;overflow:hidden}
+.week-grid>div{min-height:57px;border-right:1px solid #eeeaf6;border-bottom:1px solid #eeeaf6;padding:6px;min-width:0}
+.week-head{background:#faf8ff;color:#6c51a3;font-size:10px;font-weight:700;text-align:center;min-height:34px!important}
+.time-cell{font-size:9px;color:#8b94aa;display:flex;align-items:flex-start;justify-content:center}
+.week-cell{background:#fff}
+.schedule-chip{display:block;padding:6px 3px;border-radius:7px;font-size:8px;line-height:1.35;text-align:center}
+.schedule-chip.purple{background:#eee6ff;color:#5d32a9}.schedule-chip.orange{background:#fff0dc;color:#c66a13}.schedule-chip.green{background:#e0f7ef;color:#168c76}.schedule-chip.pink{background:#ffeaf3;color:#bd4b83}.schedule-chip.blue{background:#eaf1ff;color:#4f78bf}
+.upcoming-panel h2,.events-list h2,.academic-info h2,.notification-settings h2,.settings-section h2{margin-bottom:15px}
+.upcoming-item{display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-bottom:1px solid #f0edf7}.upcoming-item strong,.upcoming-item small{display:block}.upcoming-item strong{font-size:11px}.upcoming-item small{font-size:10px;color:#8a94aa;margin-top:4px}.dot{width:9px;height:9px;display:inline-block;border-radius:50%;flex-shrink:0;margin:4px}
+.purple-bg{background:#7541d0}.orange-bg{background:#f28a27}.green-bg{background:#1bb394}
+.panel-tip{margin-top:15px;padding:12px;border-radius:11px;background:#f6f1ff;color:#7155a8;font-size:10px;line-height:1.5}
+
+.week-grid{min-width:0}.week-head{background:#f3edff}.time-cell{color:#74658f}.week-cell{min-height:62px}.schedule-chip{font-weight:600;min-height:40px;display:flex;align-items:center;justify-content:center}.schedule-chip.purple{background:#eee6ff;color:#4d278e}.schedule-chip.orange{background:#fff0dc;color:#99500d}.schedule-chip.green{background:#e0f7ef;color:#08745f}.schedule-chip.pink{background:#ffeaf3;color:#9a3567}.schedule-chip.blue{background:#eaf1ff;color:#365f9e}

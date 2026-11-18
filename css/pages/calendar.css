@@ -1,0 +1,29 @@
+.calendar-layout{grid-template-columns:minmax(0,1.55fr) minmax(240px,.8fr)}
+.calendar-controls{display:flex;gap:7px}.round-button{width:30px;height:30px;border:0;border-radius:50%;background:#f1eaff;color:#6534b8;font-size:21px;cursor:pointer}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.calendar-day-name{text-align:center;color:#8c94aa;font-size:10px;padding:8px 0}
+.calendar-date{height:51px;display:grid;place-items:center;border-radius:10px;background:#fbfaff;color:#55437d;font-size:11px;position:relative;cursor:pointer}
+.calendar-date:hover{background:#eee6ff}.calendar-date.muted{color:#c1bfd0}.calendar-date.today{background:#6531bd;color:#fff}.calendar-date.has-event::after{content:"";position:absolute;bottom:6px;width:5px;height:5px;border-radius:50%;background:#ff8b20}
+
+.calendar-title-row{align-items:flex-end}.calendar-title-row h2{font-size:20px}.calendar-controls{display:flex;align-items:center;gap:7px}.calendar-controls .outline-button{padding:7px 12px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.calendar-legend{display:flex;flex-wrap:wrap;gap:15px;margin-top:15px;color:var(--muted);font-size:9px}.calendar-legend span{display:flex;align-items:center;gap:6px}.calendar-legend i{width:8px;height:8px;border-radius:50%}.legend-today{background:#6331bd}.legend-event{background:#ff8b20}.legend-selected{background:#20aa91}.calendar-date.selected-day{outline:2px solid #21a98f;outline-offset:1px}.calendar-date.today{background:#6531bd;color:#fff}.calendar-event-list{min-height:45px}.empty-calendar-note{font-size:10px;color:var(--muted);padding:12px 0}.calendar-upcoming-heading{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-weight:700;font-size:11px}.calendar-event-list .timeline-item,.events-list .timeline-item{margin:0}.calendar-panel{min-width:0}
+
+/* Eventos personales: punto verde azulado, distinto de los eventos institucionales */
+.calendar-date.has-event.has-personal-event::before{content:"";position:absolute;bottom:6px;left:calc(50% - 7px);width:5px;height:5px;border-radius:50%;background:#20aa91}
+.calendar-date.has-personal-event:not(.has-event)::before{content:"";position:absolute;bottom:6px;width:5px;height:5px;border-radius:50%;background:#20aa91}
+.legend-personal{background:#20aa91}
+.personal-date{background:#def8f1;color:#138a76}
+.personal-category-label{background:#def8f1;color:#138a76}
+.add-personal-event{white-space:nowrap;font-size:10px}
+.personal-event-backdrop{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:18px;background:rgba(25,14,48,.48);backdrop-filter:blur(5px)}
+.personal-event-backdrop[hidden]{display:none}
+.personal-event-dialog{position:relative;width:min(480px,100%);max-height:90vh;overflow:auto;padding:25px;border:1px solid var(--line);border-radius:20px;background:var(--surface);color:var(--text);box-shadow:0 20px 60px rgba(20,10,45,.24)}
+.personal-event-dialog h2{margin:6px 28px 18px 0;font-size:20px}
+.personal-event-dialog label{display:flex;flex-direction:column;gap:6px;margin:11px 0;color:var(--text);font-size:10px;font-weight:600}
+.personal-event-dialog input,.personal-event-dialog textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-size:11px;outline:none}
+.personal-event-dialog input:focus,.personal-event-dialog textarea:focus{border-color:#8756cf;box-shadow:0 0 0 3px rgba(135,86,207,.12)}
+.personal-event-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.personal-event-close{position:absolute;top:12px;right:15px;border:0;background:transparent;color:var(--muted);font-size:25px;cursor:pointer}
+.personal-event-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:16px}
+.personal-timeline-item{border-left:3px solid #20aa91!important}
+@media(max-width:520px){.calendar-title-row{align-items:flex-start;flex-direction:column}.calendar-controls{width:100%;flex-wrap:wrap}.add-personal-event{margin-right:auto}.personal-event-form-row{grid-template-columns:1fr}}
+body.dark-mode .personal-date,body.dark-mode .personal-category-label{background:#214b47;color:#a8eee0}

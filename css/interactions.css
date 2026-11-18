@@ -1,0 +1,150 @@
+/* Theme switch: one short hop only when the user clicks. */
+.theme-icons{position:relative;isolation:isolate;overflow:hidden}
+.theme-icons::before{transition:none!important}
+.theme-icons::before{content:"";position:absolute;z-index:0;top:4px;left:4px;width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,#4c25a7,#7543d0);box-shadow:0 3px 9px rgba(67,32,140,.24);transform:translateX(0)}
+.theme-icons[data-active-theme="light"]::before{transform:translateX(34px);background:linear-gradient(145deg,#ff9b2c,#f16b21);box-shadow:0 3px 10px rgba(240,120,30,.28)}
+.theme-choice{position:relative;z-index:1;flex:0 0 30px;width:30px;height:30px;border:0;display:grid;place-items:center;border-radius:50%;font-size:21px;line-height:1;background:transparent!important;color:#a28dca;cursor:pointer;transition:color .15s}
+.theme-choice.selected{color:#fff!important;transform:none!important}
+.theme-choice:hover{transform:none!important;box-shadow:none!important}
+.theme-icons.is-jumping[data-active-theme="light"]::before{animation:theme-hop-right .30s cubic-bezier(.28,.78,.32,1) both}
+.theme-icons.is-jumping[data-active-theme="dark"]::before{animation:theme-hop-left .30s cubic-bezier(.28,.78,.32,1) both}
+@keyframes theme-hop-right{0%{transform:translateX(0) scale(1)}35%{transform:translateX(12px) translateY(-4px) scale(1.08,.94)}72%{transform:translateX(34px) translateY(1px) scale(.98,1.03)}100%{transform:translateX(34px) translateY(0) scale(1)}}
+@keyframes theme-hop-left{0%{transform:translateX(34px) scale(1)}35%{transform:translateX(22px) translateY(-4px) scale(1.08,.94)}72%{transform:translateX(0) translateY(1px) scale(.98,1.03)}100%{transform:translateX(0) translateY(0) scale(1)}}
+
+/* Dropdowns animate on both opening and closing. */
+.notification-popover,.profile-popover{animation:none}
+.notification-popover.is-open,.profile-popover.is-open{animation:popover-open .18s ease-out both}
+.notification-popover.is-closing,.profile-popover.is-closing{animation:popover-close .16s ease-in both}
+@keyframes popover-open{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes popover-close{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}
+
+/* Global search autocomplete. */
+.topbar{position:fixed}
+.search-suggestions{position:absolute;z-index:80;top:76px;left:50%;transform:translateX(-50%);width:min(460px,42vw);max-height:min(430px,70vh);overflow:auto;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:17px;box-shadow:0 16px 42px rgba(34,19,67,.18);color:var(--text)}
+.search-suggestion{display:flex;align-items:center;gap:11px;width:100%;padding:10px;border:0;border-radius:11px;background:transparent;color:var(--text);text-align:left;cursor:pointer}
+.search-suggestion:hover,.search-suggestion.selected{background:#f1eaff}
+.search-suggestion-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#f0eaff;color:#6735bc;font-size:22px}
+.search-suggestion strong,.search-suggestion small{display:block}
+.search-suggestion strong{font-size:11px}.search-suggestion small{margin-top:3px;color:var(--muted);font-size:9px}
+.search-suggestion-arrow{margin-left:auto;color:#7544bd}
+.search-no-results{padding:14px;color:var(--muted);font-size:10px;line-height:1.5}
+
+/* Shared information dialog. */
+.info-dialog-backdrop{position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:20px;background:rgba(26,15,49,.48);backdrop-filter:blur(5px)}
+.info-dialog-backdrop[hidden]{display:none}
+.info-dialog{position:relative;width:min(500px,100%);max-height:min(82vh,760px);overflow:auto;padding:27px;border:1px solid var(--line);border-radius:21px;background:var(--surface);color:var(--text);box-shadow:0 20px 60px rgba(20,10,45,.24);animation:dialog-enter .18s ease-out}
+@keyframes dialog-enter{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.info-dialog-close{position:absolute;right:14px;top:10px;border:0;background:transparent;color:var(--muted);font-size:26px;cursor:pointer}
+.info-dialog h2{margin:8px 25px 14px 0;color:var(--text);font-size:20px}
+.info-dialog p{font-size:11px;color:var(--muted);line-height:1.65}
+.info-dialog .primary-button{margin-top:12px}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:13px 0}
+.detail-grid>div{padding:12px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--surface),#8a64c9 5%)}
+.detail-grid small,.detail-grid strong{display:block}.detail-grid small{font-size:9px;color:var(--muted)}.detail-grid strong{margin-top:4px;font-size:11px;line-height:1.4;color:var(--text)}
+.service-next-step{padding:13px;border-radius:12px;background:#f3efff;color:#4f278d}.service-next-step strong{font-size:11px}.service-next-step p{margin-bottom:0}
+
+/* Schedule and course interactions. */
+.class-row[role="button"]{cursor:pointer;transition:background .18s,transform .18s}
+.class-row[role="button"]:hover{background:#f0eaff;transform:translateX(2px)}
+.event-row[role="button"]{cursor:pointer;border-radius:10px;padding:7px;margin-left:-7px;margin-right:-7px;transition:background .18s,transform .18s}
+.event-row[role="button"]:hover{background:#f3efff;transform:translateX(2px)}
+.details-button,.outline-button,.quick-card,.service-card,.recommend-card,.hours-event,.hours-upcoming-stat,.schedule-chip{transition:background .18s,color .18s,border-color .18s,box-shadow .18s,transform .18s}
+.details-button:hover,.outline-button:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(83,42,150,.13)}
+.course-detail-trigger{margin-top:14px}
+.week-grid{grid-template-columns:62px repeat(5,minmax(86px,1fr));min-width:600px}
+.schedule-chip{width:100%;min-height:76px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;padding:8px;border:1px solid transparent;border-radius:10px;text-align:left;font-size:9px;cursor:pointer;line-height:1.3}
+.schedule-chip strong{font-size:9px}.schedule-chip small{font-size:8px;opacity:.8}
+.schedule-chip:hover{transform:translateY(-2px);filter:brightness(.97);box-shadow:0 5px 12px rgba(60,35,100,.12)}
+.schedule-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.schedule-actions select{max-width:110px}
+.data-demo-note{display:block;margin-top:4px;color:var(--muted);font-size:9px}
+.upcoming-schedule .upcoming-item{align-items:flex-start}
+
+/* Calendar agenda and important dates. */
+.calendar-date.today:hover{background:#6531bd!important;color:#fff!important;transform:none!important;box-shadow:none!important;outline:0!important}
+.calendar-date.selected-day.today:hover{outline:2px solid #21a98f!important;outline-offset:1px!important}
+.calendar-event-list{display:flex;flex-direction:column;gap:7px}
+.calendar-event-list .timeline-item,.events-list>#upcomingCalendarEvents .timeline-item{display:flex;align-items:flex-start;gap:11px;padding:11px;border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:0 3px 12px rgba(43,24,85,.04)}
+.timeline-item>div{min-width:0;flex:1}.timeline-item strong{font-size:10px}.timeline-item p{margin:5px 0 0;color:var(--muted);font-size:9px;line-height:1.45}.event-category-label{display:inline-block;margin-top:7px;padding:3px 7px;border-radius:10px;background:#f0eaff;color:#6637b8;font-size:8px;text-transform:capitalize}
+.calendar-empty-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 14px;border:1px dashed var(--line);border-radius:13px;background:rgba(126,91,184,.04);text-align:center}
+.calendar-empty-card span{font-size:22px;color:#8959cc}.calendar-empty-card strong{font-size:10px}.calendar-empty-card small{max-width:210px;color:var(--muted);font-size:9px;line-height:1.5}
+.important-grid>article{padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:0 3px 12px rgba(43,24,85,.04)}
+.important-grid>article strong,.important-grid>article small,.important-grid>article p{display:block}.important-grid>article small{margin:5px 0 0 18px;color:var(--muted);font-size:9px}.important-grid>article p{margin:9px 0 0;color:var(--muted);font-size:9px;line-height:1.5}
+
+/* Service tabs, hours activities, active page. */
+.service-filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.service-filters .tab-button{padding:7px 12px;border:0;border-radius:15px;background:#f4f0fb;color:#6f5a91;font-size:9px;cursor:pointer}
+.service-filters .tab-button.active{background:#6330bd;color:white}
+.service-card[hidden]{display:none}
+.hours-event{border-radius:12px;padding:13px;margin:4px -8px;cursor:pointer}
+.hours-event:hover{background:#f3efff;transform:translateX(3px);box-shadow:0 5px 15px rgba(75,35,140,.08)}
+.hours-upcoming-stat{text-decoration:none;position:relative}
+.hours-upcoming-stat>b{margin-left:auto;color:#7544bd;font-size:22px}
+.current-student{background:rgba(112,66,190,.07)}
+.current-student td{font-weight:700}
+.academic-empty-state{grid-column:1/-1;padding:24px;border:1px dashed var(--line);border-radius:15px;color:var(--muted);font-size:11px;line-height:1.6}
+
+/* Dark-theme hover and readability fixes. */
+body.dark-mode .search-suggestions{background:#241b38;border-color:#403352;color:#f0eaff}
+body.dark-mode .search-suggestion{color:#f0eaff}
+body.dark-mode .search-suggestion:hover,body.dark-mode .search-suggestion.selected{background:#3a2c50}
+body.dark-mode .search-suggestion-icon{background:#3b2b55;color:#d6bdff}
+body.dark-mode .search-suggestion small{color:#c1b5d9}
+body.dark-mode .event-row[role="button"]:hover,body.dark-mode .class-row[role="button"]:hover,body.dark-mode .hours-event:hover{background:#3a2c50;color:#fff}
+body.dark-mode .details-button:hover,body.dark-mode .outline-button:hover{background:#49345f;color:#fff;border-color:#694a91}
+body.dark-mode .service-card:hover,body.dark-mode .recommend-card:hover,body.dark-mode .course-card:hover{background:#302442;border-color:#6b4b8d;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+body.dark-mode .service-filters .tab-button{background:#372a4b;color:#d6caea}
+body.dark-mode .service-filters .tab-button.active{background:#7548c4;color:#fff}
+body.dark-mode .important-grid>article,body.dark-mode .calendar-event-list .timeline-item,body.dark-mode .events-list>#upcomingCalendarEvents .timeline-item{background:#2b213d;border-color:#4b3b62;color:#f0eaff}
+body.dark-mode .calendar-empty-card{background:#2b213d;border-color:#51416a}
+body.dark-mode .event-category-label{background:#41305b;color:#e1d0ff}
+body.dark-mode .service-next-step{background:#3b2c54;color:#ebddff}
+body.dark-mode .detail-grid>div{background:#302544;border-color:#4b3b62}
+body.dark-mode .class-dialog,body.dark-mode .info-dialog{background:#241b38;color:#f0eaff;border-color:#403352}
+body.dark-mode .info-dialog h2,body.dark-mode .detail-grid strong{color:#f0eaff}
+body.dark-mode .info-dialog p,body.dark-mode .detail-grid small{color:#c1b5d9}
+body.dark-mode .schedule-chip:hover{filter:brightness(1.12);box-shadow:0 5px 14px rgba(0,0,0,.26)}
+body.dark-mode .current-student{background:#3a2c50}
+body.dark-mode .page-slogan{color:#c8a7ff}
+
+/* Keep page slogan in normal document flow. */
+.page-slogan{position:relative!important;inset:auto!important;float:none;clear:both;margin:24px 5% 12px auto!important;max-width:230px;z-index:1}
+
+/* No sidebar scrollbar; the promo stays attached to its bottom edge. */
+.sidebar{height:calc(100dvh - 88px);bottom:auto;display:flex;flex-direction:column;overflow:hidden}
+.navigation{flex:1 1 auto;min-height:0;overflow:hidden!important;padding:20px 18px 10px!important}
+.nav-item{min-height:40px;margin-bottom:7px;flex-shrink:0}
+.sidebar-promo{position:relative!important;left:auto;right:auto;bottom:auto;flex:0 0 clamp(150px,24vh,225px)!important;height:clamp(150px,24vh,225px)!important;margin-top:auto;overflow:hidden}
+.sidebar-promo img{height:58%!important;width:125%;top:0;left:-12%}
+.sidebar-promo p{top:auto!important;left:42px!important;bottom:37px!important;font-size:18px!important}
+.sidebar-promo .orange-line{top:auto!important;left:60px!important;bottom:22px!important;width:92px}
+.sidebar-promo-shape{top:auto!important;left:-55px;bottom:28px}
+
+/* Reduced motion is controlled from Settings and also respects OS preference. */
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+@media(prefers-reduced-motion:reduce){html:not(.allow-motion) *,html:not(.allow-motion) *::before,html:not(.allow-motion) *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media(max-width:950px){.sidebar{height:calc(100dvh - 88px)}.navigation{padding:16px 8px 8px!important}.nav-item{min-height:39px;margin-bottom:6px}.sidebar-promo{flex-basis:clamp(125px,20vh,180px)!important;height:clamp(125px,20vh,180px)!important}.sidebar-promo p,.sidebar-promo .orange-line,.sidebar-promo-shape{display:none!important}}
+@media(max-width:650px){.sidebar{height:calc(100dvh - 70px);top:70px;width:255px;transform:translateX(-105%);transition:transform .25s ease}.sidebar.mobile-open{transform:translateX(0)}.navigation{padding:14px 15px 8px!important}.nav-item{min-height:38px;margin-bottom:5px;justify-content:flex-start;padding:0 14px;gap:14px}.nav-item span{display:inline}.sidebar-promo{flex-basis:160px!important;height:160px!important}.sidebar-promo p{display:block!important;bottom:21px!important;left:34px!important;font-size:16px!important}.sidebar-promo .orange-line{display:block!important;bottom:10px!important;left:49px!important;width:80px}.sidebar-promo-shape{display:block!important;bottom:18px!important;top:auto!important}}
+@media(max-height:760px) and (min-width:651px){.navigation{padding-top:10px!important}.nav-item{min-height:34px;margin-bottom:3px;font-size:11px}.nav-item svg{width:19px;height:19px}.sidebar-promo{flex-basis:145px!important;height:145px!important}.sidebar-promo p,.sidebar-promo .orange-line{display:none!important}}
+@media(max-width:650px){.search-suggestions{top:62px;left:45%;width:min(400px,88vw);transform:translateX(-45%)}.schedule-actions{width:100%;justify-content:space-between}.schedule-actions .filter-select{max-width:120px}.schedule-actions .outline-button{font-size:9px}.week-grid{min-width:600px}.schedule-panel>.panel-heading{align-items:flex-start;flex-direction:column}.detail-grid{grid-template-columns:1fr 1fr}}
+
+.hours-upcoming-stat:hover{background:#f5f0ff;transform:translateY(-3px);box-shadow:0 8px 20px rgba(70,36,130,.12)}
+.hours-upcoming-stat:focus-visible,.hours-event:focus-visible,.class-row[role="button"]:focus-visible,.event-row[role="button"]:focus-visible{outline:2px solid #8253cd;outline-offset:2px}
+body.dark-mode .hours-upcoming-stat:hover{background:#3a2c50;box-shadow:0 8px 20px rgba(0,0,0,.24)}
+
+/* Las actividades próximas de horas libres son estáticas: sin hover ni cursor interactivo */
+.hours-event,
+.hours-event:hover,
+body.dark-mode .hours-event:hover {
+    cursor: default !important;
+    transform: none !important;
+    box-shadow: none !important;
+    transition: none !important;
+}
+.hours-event:hover,
+body.dark-mode .hours-event:hover {
+    background: transparent !important;
+}
+body.dark-mode .notice-item.notice-targeted {
+    background: #3b2b55;
+    outline-color: rgba(173, 137, 235, .55);
+}

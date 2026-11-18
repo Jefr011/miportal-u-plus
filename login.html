@@ -1,15 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Iniciar sesión | MiPortal U Plus</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./css/style.css">
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+
+<link href="css/base.css" rel="stylesheet"/><link href="css/shell.css" rel="stylesheet"/><link href="css/components.css" rel="stylesheet"/><link href="css/pages/login.css" rel="stylesheet"/><link href="css/theme.css" rel="stylesheet"/><link href="css/responsive.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="css/interactions.css" rel="stylesheet"/>
 </head>
-<body class="login-page">
-<header class="login-brand"><a class="portal-logo" href="index.html">MiPortal <span>U Plus+</span></a><div class="unab-logo"><img src="./assets/dashboard/logo_UNAB.png" alt="Logo UNAB" class="logo-img"><div><strong>unab</strong><small>Universidad Autónoma<br>de Bucaramanga</small></div></div><a class="text-link" href="index.html">¿Necesitas ayuda?</a></header>
-<main class="login-main"><div class="login-photo login-photo-left"><img src="./assets/campus-lateral.jpg" alt="Campus UNAB"></div><div class="login-photo login-photo-right"><img src="./assets/campus-principal.jpg" alt="Edificio UNAB"></div><div class="login-decoration"></div>
-<form class="login-card" id="loginForm"><p class="eyebrow">Bienvenido a</p><h1>MiPortal <span>U Plus</span></h1><p class="login-intro">Ingresa para continuar tu experiencia universitaria.</p><label>Usuario<input type="text" placeholder="Ingresa tu usuario" required></label><label>Contraseña<div class="password-field"><input id="passwordInput" type="password" placeholder="Ingresa tu contraseña" required><button type="button" id="togglePassword" aria-label="Mostrar contraseña">◉</button></div></label><button class="primary-button login-submit" type="submit">Iniciar sesión <b>→</b></button><a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a><p class="login-feedback" id="loginFeedback"></p></form></main>
+<body class="login-page" data-page="login">
+<header class="login-brand"><a class="portal-logo" href="index.html">MiPortal <span>U Plus+</span></a><div class="unab-logo"><img alt="Logo UNAB" class="logo-img" src="./assets/dashboard/logo_UNAB.png"/><div><strong>unab</strong><small>Universidad Autónoma<br/>de Bucaramanga</small></div></div><a class="text-link" href="index.html">¿Necesitas ayuda?</a></header>
+<main class="login-main"><div class="login-photo login-photo-left"><img alt="Campus UNAB" src="./assets/campus-lateral.jpg"/></div><div class="login-photo login-photo-right"><img alt="Edificio UNAB" src="./assets/campus-principal.jpg"/></div><div class="login-decoration"></div>
+<form class="login-card" id="loginForm"><p class="eyebrow">Bienvenido a</p><h1>MiPortal <span>U Plus</span></h1><p class="login-intro">Ingresa para continuar tu experiencia universitaria.</p><label>Usuario<input placeholder="Ingresa tu usuario" required="" type="text"/></label><label>Contraseña<div class="password-field"><input id="passwordInput" placeholder="Ingresa tu contraseña" required="" type="password"/><button aria-label="Mostrar contraseña" id="togglePassword" type="button">◉</button></div></label><button class="primary-button login-submit" type="submit">Iniciar sesión <b>→</b></button><a class="forgot-link" href="#">¿Olvidaste tu contraseña?</a><p class="login-feedback" id="loginFeedback"></p></form></main>
 <script src="./js/app.js"></script>
 </body></html>
