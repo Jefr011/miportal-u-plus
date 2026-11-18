@@ -5,205 +5,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ffffff">
-    <title>MiPortal U Plus+</title>
+    <title>Inicio | MiPortal U Plus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <header class="topbar">
+        <button class="mobile-menu icon-button" id="mobileMenu" aria-label="Abrir navegación"><svg viewBox="0 0 24 24">
+                <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg></button>
         <div class="brand">
-            <a class="portal-logo" href="#" aria-label="MiPortal U Plus">MiPortal <span>U Plus+</span></a>
-            <div class="brand-divider"></div>
-            <div class="unab-logo">
-                <img src="./assets/dashboard/logo_UNAB.png" alt="Logo UNAB" class="logo-img">
+            <a class="portal-logo" href="index.html">MiPortal <span>U Plus+</span></a>
+            <div class="unab-logo"><img src="assets/dashboard/logo_UNAB.png" alt="Logo UNAB" class="logo-img">
                 <div><strong>unab</strong><small>Universidad Autónoma<br>de Bucaramanga</small></div>
             </div>
         </div>
-
-        <div class="search-box" role="search">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="11" cy="11" r="6.5"></circle>
-                <path d="m16 16 4 4"></path>
-            </svg>
-            <span>Buscar en MiPortal...</span>
-        </div>
-
+        <label class="search-box"><svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="6.5" />
+                <path d="m16 16 4 4" />
+            </svg><input id="globalSearch" type="search" placeholder="Buscar en MiPortal..."
+                aria-label="Buscar"></label>
         <div class="user-area">
-            <div class="theme-icons" aria-label="Selector de tema">
-                <span class="moon-symbol" title="Modo oscuro">☾</span>
-                <span class="sun-symbol" title="Modo claro">☼</span>
-            </div>
-            <button class="icon-button notification" type="button" aria-label="Notificaciones">
-                <img src="./assets/dashboard/notificacion.png" alt="" class="notificacion-logo">
-                <span class="notification-count">3</span>
-            </button>
-            <img class="profile-photo" src="./assets/perfil.jpg" alt="Foto de perfil">
+            <div class="theme-icons" aria-label="Selector de tema"><button class="theme-choice" data-theme="dark"
+                    title="Modo oscuro" aria-label="Modo oscuro">☾</button><button class="theme-choice selected"
+                    data-theme="light" title="Modo claro" aria-label="Modo claro">☼</button></div>
+            <button class="icon-button notification" aria-label="Notificaciones"
+                onclick="location.href='pages/notificaciones.html'"><img src="assets/dashboard/notificacion.png"
+                    alt=""><span class="notification-count">3</span></button>
+            <img class="profile-photo" src="assets/perfil.jpg" alt="Foto de perfil">
             <div class="user-name"><strong>Juan Pérez</strong><small>Estudiante</small></div>
-            <button class="icon-button profile-menu" type="button" aria-label="Abrir menú de usuario">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m7 10 5 5 5-5"></path>
-                </svg>
-            </button>
+            <button class="icon-button profile-menu" aria-label="Ir al perfil"
+                onclick="location.href='pages/perfil.html'"><svg viewBox="0 0 24 24">
+                    <path d="m7 10 5 5 5-5" />
+                </svg></button>
         </div>
     </header>
-
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
     <aside class="sidebar">
-        <nav class="navigation" aria-label="Navegación principal">
-            <a href="#" class="nav-item active" aria-current="page">
-                <svg viewBox="0 0 24 24">
-                    <path d="m3 10 9-7 9 7"></path>
-                    <path d="M5 9v11h14V9M9 20v-7h6v7"></path>
-                </svg><span>Inicio</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"></path>
-                    <path d="M4 5.5V20M8 7h8M8 11h7"></path>
-                </svg><span>Mis cursos</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                    <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6"></path>
-                </svg><span>Horario</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                    <path d="M7 3v4M17 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"></path>
-                </svg><span>Calendario</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"></path>
-                </svg><span>Calificaciones</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
+        <nav class="navigation" aria-label="Navegación principal"><a class="nav-item active" href="index.html"
+                aria-current=page><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m3 10 9-7 9 7" />
+                    <path d="M5 9v11h14V9M9 20v-7h6v7" />
+                </svg><span>Inicio</span></a>
+            <a class="nav-item" href="pages/mis-cursos.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z" />
+                    <path d="M4 5.5V20M8 7h8M8 11h7" />
+                </svg><span>Mis cursos</span></a>
+            <a class="nav-item" href="pages/horario.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6" />
+                </svg><span>Horario</span></a>
+            <a class="nav-item" href="pages/calendario.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M7 3v4M17 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01" />
+                </svg><span>Calendario</span></a>
+            <a class="nav-item" href="pages/calificaciones.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z" />
+                </svg><span>Calificaciones</span></a>
+            <a class="nav-item" href="pages/servicios.html"><svg viewBox="0 0 24 24" aria-hidden="true">
                     <path
-                        d="M3 7.5A1.5 1.5 0 0 1 4.5 6H10l2 2h7.5A1.5 1.5 0 0 1 21 9.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z">
-                    </path>
-                    <path d="M3 9h18"></path>
-                </svg><span>Recursos</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <path d="M18 20v-1.5a4.5 4.5 0 0 0-4.5-4.5h-3A4.5 4.5 0 0 0 6 18.5V20"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg><span>Notificaciones</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2M12 3v2M21 12h-2"></path>
-                </svg><span>Horas libres</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z"></path>
-                    <path d="M9 21v-7h6v7M7 10h.01M17 10h.01"></path>
-                </svg><span>Lugares y campus</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="4"></circle>
-                    <path d="M4 21a8 8 0 0 1 16 0"></path>
-                </svg><span>Perfil</span>
-            </a>
-            <a href="#" class="nav-item">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path>
+                        d="M3 7.5A1.5 1.5 0 0 1 4.5 6H10l2 2h7.5A1.5 1.5 0 0 1 21 9.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z" />
+                    <path d="M3 9h18" />
+                </svg><span>Recursos</span></a>
+            <a class="nav-item" href="pages/notificaciones.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                    <path d="M10 21h4" />
+                </svg><span>Notificaciones</span></a>
+            <a class="nav-item" href="pages/horas-libres.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" />
+                </svg><span>Horas libres</span></a>
+            <a class="nav-item" href="pages/lugares-campus.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z" />
+                    <path d="M9 3v15M15 6v15" />
+                </svg><span>Lugares y campus</span></a>
+            <a class="nav-item" href="pages/perfil.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21a8 8 0 0 1 16 0" />
+                </svg><span>Perfil</span></a>
+            <a class="nav-item" href="pages/configuracion.html"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3" />
                     <path
-                        d="m19.4 15 .1.1 1.1.9-1.5 2.6-1.4-.6a8 8 0 0 1-1.6.9l-.2 1.5h-3l-.2-1.5a8 8 0 0 1-1.6-.9l-1.4.6-1.5-2.6 1.1-.9a7 7 0 0 1 0-1.9l-1.1-.9 1.5-2.6 1.4.6a8 8 0 0 1 1.6-.9l.2-1.5h3l.2 1.5a8 8 0 0 1 1.6.9l1.4-.6 1.5 2.6-1.1.9a7 7 0 0 1 0 1.8Z">
-                    </path>
-                </svg><span>Configuración</span>
-            </a>
+                        d="m19.4 15 .1.1 1.1.9-1.5 2.6-1.4-.6a8 8 0 0 1-1.6.9l-.2 1.5h-3l-.2-1.5a8 8 0 0 1-1.6-.9l-1.4.6-1.5-2.6 1.1-.9a7 7 0 0 1 0-1.9l-1.1-.9 1.5-2.6 1.4.6a8 8 0 0 1 1.6-.9l.2-1.5h3l.2 1.5a8 8 0 0 1 1.6.9l1.4-.6 1.5 2.6-1.1.9a7 7 0 0 1 0 1.8Z" />
+                </svg><span>Configuración</span></a>
         </nav>
-
         <div class="sidebar-promo">
-            <img src="./assets/campus-lateral.jpg" alt="Campus de la UNAB">
+            <img src="assets/campus-lateral.jpg" alt="Campus de la UNAB">
             <div class="sidebar-promo-shape"></div>
             <p>Tu talento<br>nos impulsa</p>
             <div class="orange-line"></div>
         </div>
     </aside>
-
     <main class="main-content">
         <section class="welcome">
             <div class="welcome-text">
                 <p class="hello">¡Hola, Juan!</p>
                 <h1>Bienvenido a tu portal<br>MiPortal <span>U Plus</span></h1>
-                <p class="subtitle">Aquí encuentras todo lo que necesitas para tu vida universitaria.</p>
-                <span class="little-decoration" aria-hidden="true"><i></i><i></i><i></i></span>
+                <p class="subtitle">Aquí encuentras todo lo que necesitas para tu vida universitaria.</p><span
+                    class="little-decoration"><i></i><i></i><i></i></span>
             </div>
-            <div class="hero-banner">
-                <img src="./assets/campus-principal.jpg" alt="Edificio de la UNAB">
-                <div class="hero-message">
-                    <strong>UNAB</strong>
-                    <p>Formación que<br>transforma</p>
-                    <span></span>
+            <div class="hero-banner"><img src="./assets/campus-principal.jpg" alt="Edificio de la UNAB">
+                <div class="hero-message"><strong>UNAB</strong>
+                    <p>Formación que<br>transforma</p><span></span>
                 </div>
             </div>
         </section>
-
-        <section class="quick-links" aria-label="Accesos rápidos">
-            <article class="quick-card purple-card">
-                <div class="quick-icon"><svg viewBox="0 0 24 24">
-                        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"></path>
-                        <path d="M4 5.5V20M8 7h8M8 11h7"></path>
-                    </svg></div>
-                <span class="card-arrow"><svg viewBox="0 0 24 24">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg></span>
+        <section class="quick-links">
+            <a href="pages/mis-cursos.html" class="quick-card purple-card">
+                <div class="quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z" />
+                        <path d="M4 5.5V20M8 7h8M8 11h7" />
+                    </svg></div><span class="card-arrow">›</span>
                 <h2>Mis cursos</h2>
                 <p>Accede a tus materias</p>
-            </article>
-            <article class="quick-card orange-card">
-                <div class="quick-icon"><svg viewBox="0 0 24 24">
-                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                        <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6"></path>
-                    </svg></div>
-                <span class="card-arrow"><svg viewBox="0 0 24 24">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg></span>
+            </a>
+            <a href="pages/horario.html" class="quick-card orange-card">
+                <div class="quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2" />
+                        <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6" />
+                    </svg></div><span class="card-arrow">›</span>
                 <h2>Horario</h2>
                 <p>Consulta tus clases</p>
-            </article>
-            <article class="quick-card green-card">
-                <div class="quick-icon"><svg viewBox="0 0 24 24">
-                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                        <path d="M7 3v4M17 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"></path>
-                    </svg></div>
-                <span class="card-arrow"><svg viewBox="0 0 24 24">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg></span>
+            </a>
+            <a href="pages/calendario.html" class="quick-card green-card">
+                <div class="quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2" />
+                        <path d="M7 3v4M17 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01" />
+                    </svg></div><span class="card-arrow">›</span>
                 <h2>Calendario</h2>
                 <p>Eventos y pendientes</p>
-            </article>
-            <article class="quick-card pink-card">
-                <div class="quick-icon"><svg viewBox="0 0 24 24">
-                        <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"></path>
-                    </svg></div>
-                <span class="card-arrow"><svg viewBox="0 0 24 24">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg></span>
+            </a>
+            <a href="pages/calificaciones.html" class="quick-card pink-card">
+                <div class="quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z" />
+                    </svg></div><span class="card-arrow">›</span>
                 <h2>Calificaciones</h2>
                 <p>Revisa tu progreso</p>
-            </article>
+            </a>
         </section>
-
         <section class="dashboard-grid">
             <article class="panel schedule-panel">
                 <div class="panel-heading">
-                    <h2><span class="heading-symbol"><svg viewBox="0 0 24 24">
-                                <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                                <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6"></path>
-                            </svg></span>Tu horario de hoy</h2>
-                    <a href="#" class="text-link">Ver completo</a>
+                    <h2><svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="5" width="18" height="16" rx="2" />
+                            <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6" />
+                        </svg>Tu horario de hoy</h2><a href="pages/horario.html" class="text-link">Ver completo</a>
                 </div>
                 <div class="class-row"><span class="class-color violet"></span>
                     <div><small>8:00 a.m. – 10:00 a.m.</small><strong>Matemáticas</strong><span>Aula B-203 · Edificio
@@ -218,21 +168,19 @@
                     </div><span class="row-arrow">›</span>
                 </div>
             </article>
-
-            <article class="campus-card">
-                <img src="./assets/estudiantes-campus.jpg" alt="Estudiantes compartiendo en el campus">
+            <a class="campus-card" href="pages/lugares-campus.html"><img src="./assets/estudiantes-campus.jpg"
+                    alt="Estudiantes en el campus">
                 <div class="campus-card-text">
                     <h2>Tu universidad,<br>también es tu comunidad</h2>
-                    <p>Conoce todo lo que puedes vivir<br>en la UNAB.</p>
-                    <a href="#" class="white-button">Explorar campus <b>›</b></a>
+                    <p>Conoce todo lo que puedes vivir<br>en la UNAB.</p><span class="white-button">Explorar campus
+                        <b>›</b></span>
                 </div>
-            </article>
-
+            </a>
             <div class="right-column">
                 <article class="panel events-panel">
                     <div class="events-heading">
                         <div class="date-box"><strong>24</strong><small>OCT</small></div>
-                        <h2>Próximos eventos</h2><a href="#" class="text-link">Ver todos</a>
+                        <h2>Próximos eventos</h2><a href="pages/calendario.html" class="text-link">Ver todos</a>
                     </div>
                     <div class="event-row"><span class="event-dot orange-dot"></span>
                         <div><strong>Feria de emprendimiento</strong><small>Zona verde · 10:00 a.m.</small></div><span
@@ -243,21 +191,16 @@
                         </div>
                     </div>
                 </article>
-                <article class="resource-card">
+                <a href="pages/servicios.html" class="resource-card">
                     <div class="resource-text">
                         <h2>Grandes cosas<br>te esperan</h2>
-                        <p>Sigue construyendo<br>tu futuro.</p><a href="#" class="white-button">Ver recursos
-                            <b>›</b></a>
-                    </div>
-                    <img src="./assets/campus-recursos.jpg" alt="Edificio de la universidad">
-                </article>
+                        <p>Sigue construyendo<br>tu futuro.</p><span class="white-button">Ver recursos <b>›</b></span>
+                    </div><img src="./assets/campus-recursos.jpg" alt="Edificio universitario">
+                </a>
             </div>
-
             <article class="panel progress-panel">
-                <div class="progress-heading">
-                    <span class="graduation-icon"><svg viewBox="0 0 24 24">
-                            <path d="m2 9 10-5 10 5-10 5z"></path>
-                            <path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"></path>
+                <div class="progress-heading"><span class="graduation-icon"><svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z" />
                         </svg></span>
                     <h2>Tu progreso académico</h2>
                 </div>
@@ -266,15 +209,14 @@
                         <div>78%</div>
                     </div>
                     <div class="credits"><span>Créditos aprobados</span><strong>36 <small>/
-                                46</small></strong><small>Último periodo: 2025-2</small></div>
-                    <a href="#" class="details-button">Ver detalles <b>›</b></a>
+                                46</small></strong><small>Último periodo: 2025-2</small></div><a
+                        href="pages/calificaciones.html" class="details-button">Ver detalles <b>›</b></a>
                 </div>
             </article>
         </section>
+        <div class="page-slogan">Más que<br>una universidad<span></span></div>
     </main>
-
-    <div class="bottom-slogan">Más que<br>una universidad<div></div>
-    </div>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

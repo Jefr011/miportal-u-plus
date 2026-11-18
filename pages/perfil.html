@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>Mi perfil | MiPortal U Plus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="topbar">
+<button class="mobile-menu icon-button" id="mobileMenu" aria-label="Abrir navegación"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+<div class="brand">
+<a class="portal-logo" href="../index.html">MiPortal <span>U Plus+</span></a>
+<div class="unab-logo"><img src="../assets/dashboard/logo_UNAB.png" alt="Logo UNAB" class="logo-img"><div><strong>unab</strong><small>Universidad Autónoma<br>de Bucaramanga</small></div></div>
+</div>
+<label class="search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input id="globalSearch" type="search" placeholder="Buscar en MiPortal..." aria-label="Buscar"></label>
+<div class="user-area">
+<div class="theme-icons" aria-label="Selector de tema"><button class="theme-choice" data-theme="dark" title="Modo oscuro" aria-label="Modo oscuro">☾</button><button class="theme-choice selected" data-theme="light" title="Modo claro" aria-label="Modo claro">☼</button></div>
+<button class="icon-button notification" aria-label="Notificaciones" onclick="location.href='../pages/notificaciones.html'"><img src="../assets/dashboard/notificacion.png" alt=""><span class="notification-count">3</span></button>
+<img class="profile-photo" src="../assets/perfil.jpg" alt="Foto de perfil">
+<div class="user-name"><strong>Juan Pérez</strong><small>Estudiante</small></div>
+<button class="icon-button profile-menu" aria-label="Ir al perfil" onclick="location.href='../pages/perfil.html'"><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></button>
+</div>
+</header>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<aside class="sidebar">
+<nav class="navigation" aria-label="Navegación principal"><a class="nav-item" href="../index.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9M9 20v-7h6v7"/></svg><span>Inicio</span></a>
+<a class="nav-item" href="../pages/mis-cursos.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5V20M8 7h8M8 11h7"/></svg><span>Mis cursos</span></a>
+<a class="nav-item" href="../pages/horario.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6"/></svg><span>Horario</span></a>
+<a class="nav-item" href="../pages/calendario.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg><span>Calendario</span></a>
+<a class="nav-item" href="../pages/calificaciones.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg><span>Calificaciones</span></a>
+<a class="nav-item" href="../pages/servicios.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H10l2 2h7.5A1.5 1.5 0 0 1 21 9.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/><path d="M3 9h18"/></svg><span>Recursos</span></a>
+<a class="nav-item" href="../pages/notificaciones.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span>Notificaciones</span></a>
+<a class="nav-item" href="../pages/horas-libres.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Horas libres</span></a>
+<a class="nav-item" href="../pages/lugares-campus.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg><span>Lugares y campus</span></a>
+<a class="nav-item active" href="../pages/perfil.html" aria-current=page><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Perfil</span></a>
+<a class="nav-item" href="../pages/configuracion.html" ><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.1.9-1.5 2.6-1.4-.6a8 8 0 0 1-1.6.9l-.2 1.5h-3l-.2-1.5a8 8 0 0 1-1.6-.9l-1.4.6-1.5-2.6 1.1-.9a7 7 0 0 1 0-1.9l-1.1-.9 1.5-2.6 1.4.6a8 8 0 0 1 1.6-.9l.2-1.5h3l.2 1.5a8 8 0 0 1 1.6.9l1.4-.6 1.5 2.6-1.1.9a7 7 0 0 1 0 1.8Z"/></svg><span>Configuración</span></a>
+</nav>
+<div class="sidebar-promo">
+<img src="../assets/campus-lateral.jpg" alt="Campus de la UNAB">
+<div class="sidebar-promo-shape"></div><p>Tu talento<br>nos impulsa</p><div class="orange-line"></div>
+</div>
+</aside>
+<main class="main-content">
+<section class="page-hero"><div><p class="eyebrow">Tu cuenta</p><h1>Mi perfil</h1><p>Consulta y administra tu información personal y académica.</p></div><div class="page-hero-image"><img src="../assets/campus-principal.jpg" alt="Campus UNAB"><div><strong>UNAB</strong><span>Formación que<br>transforma</span></div></div></section>
+<div class="profile-layout"><section class="panel profile-card"><div class="profile-cover"></div><img class="profile-large" src="../assets/perfil.jpg" alt="Foto de Juan Pérez"><h2>Juan Pérez</h2><p>Estudiante de Ingeniería de Sistemas</p><span class="status active-status">Estudiante activo</span><a href="#" class="primary-button">Editar perfil</a><div class="profile-social"><span>✉ juan.perez@unab.edu.co</span><span>⌖ Bucaramanga, Colombia</span></div></section>
+<div class="profile-details"><section class="panel"><div class="panel-heading"><h2>Datos personales</h2><a href="#" class="text-link">Editar</a></div><div class="detail-grid"><div><small>Nombre completo</small><strong>Juan Pérez</strong></div><div><small>Documento</small><strong>1.098.***.***</strong></div><div><small>Correo institucional</small><strong>juan.perez@unab.edu.co</strong></div><div><small>Teléfono</small><strong>+57 300 000 0000</strong></div><div><small>Fecha de nacimiento</small><strong>15 de mayo de 2007</strong></div><div><small>Ciudad</small><strong>Bucaramanga</strong></div></div></section><section class="panel"><div class="panel-heading"><h2>Información académica</h2><a href="calificaciones.html" class="text-link">Ver detalles</a></div><div class="detail-grid"><div><small>Programa</small><strong>Ingeniería de Sistemas</strong></div><div><small>Periodo</small><strong>2025-2</strong></div><div><small>Facultad</small><strong>Ingeniería</strong></div><div><small>Semestre</small><strong>3.er semestre</strong></div></div></section><section class="panel"><h2>Mis datos adicionales</h2><div class="detail-grid"><div><small>Intereses</small><strong>Tecnología y videojuegos</strong></div><div><small>Actividades</small><strong>Comunidad universitaria</strong></div></div></section></div></div>
+<div class="page-slogan">Más que<br>una universidad<span></span></div>
+</main>
+<script src="../js/app.js"></script>
+</body>
+</html>

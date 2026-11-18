@@ -1,8 +1,17 @@
-# miportal-u-plus
-Sitio web creado para mejorar la navegacion de mi portal U y hacerla mas sencilla y moderna. Proyecto de interfaces de usuario.
+# MiPortal U Plus
 
-# Wareframes
-los 10 wareframes estan en la carpeta "Wareframes" con sus respectivos nombres.
+Prototipo de interfaz universitaria construido con HTML, CSS y JavaScript vanilla.
 
-# Codigo
-el codigo de la pagina se encuentra en index.html y en syles.css dentro de la carpeta styles
+## Estructura
+- `index.html`: dashboard.
+- `login.html`: inicio de sesión.
+- `pages/`: vistas de cursos, horario, calendario, calificaciones, servicios, notificaciones, horas libres, campus, perfil y configuración.
+- `css/style.css`: estilos compartidos y responsive.
+- `js/app.js`: navegación móvil, tema claro/oscuro, filtros, calendario y acciones de demostración.
+- `assets/`: imágenes originales del proyecto.
+- `wareframes/`: wireframes originales entregados como referencia.
+
+## Ejecución
+Abre `index.html` en el navegador. Para una experiencia más consistente, ejecuta la carpeta con Live Server desde Visual Studio Code.
+
+Los formularios y enlaces externos son prototipos de interfaz; no existe conexión a servicios institucionales ni autenticación real.
