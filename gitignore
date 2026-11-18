@@ -1,0 +1,75 @@
+# ============================================
+# MiPortal U Plus - archivos locales y temporales
+# ============================================
+
+# Sistema operativo
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editores e IDE
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-workspace
+*.sublime-project
+
+# Archivos temporales de editores
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+
+# Logs y archivos de depuración
+*.log
+error_log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Variables de entorno y secretos locales
+.env
+.env.*
+!.env.example
+
+# Dependencias (si se incorporan en el futuro)
+/node_modules/
+/vendor/
+
+# Salidas generadas y cobertura de pruebas
+/dist/
+/build/
+/coverage/
+/.nyc_output/
+
+# Cachés de herramientas PHP y pruebas
+.phpunit.cache/
+.php-cs-fixer.cache
+.phpstan-cache/
+.phpstorm.meta.php
+
+# Sesiones PHP y archivos de ejecución locales
+sess_*
+*.session
+/sessions/
+/tmp/
+/temp/
+/cache/
+
+# Datos locales de desarrollo. No ignorar archivos fuente JSON
+# que formen parte del proyecto; limitar estas reglas a almacenamiento runtime.
+/storage/*.json
+/data/*.json
+/api/data/*.json
+/uploads/*
+!/uploads/.gitkeep
+
+# Archivos de respaldo locales
+*.bak
+*.backup
+*.old
