@@ -2,6 +2,7 @@
 
 <html lang="es">
 <head>
+<script>document.documentElement.classList.add("auth-checking");</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="#ffffff" name="theme-color"/>
@@ -10,8 +11,9 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
 
-<link href="../css/base.css" rel="stylesheet"/><link href="../css/shell.css" rel="stylesheet"/><link href="../css/components.css" rel="stylesheet"/><link href="../css/pages/places.css" rel="stylesheet"/><link href="../css/theme.css" rel="stylesheet"/><link href="../css/responsive.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/shell.css" rel="stylesheet"/><link href="../css/components.css" rel="stylesheet"/><link href="../css/pages/campus-map.css" rel="stylesheet"/><link href="../css/theme.css" rel="stylesheet"/><link href="../css/responsive.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="../css/interactions.css" rel="stylesheet"/>
+<link href="../css/features.css" rel="stylesheet">
 </head>
 <body data-page="lugares-campus">
 <header class="topbar">
@@ -28,10 +30,10 @@
 <a class="preview-notice" data-notice-target="notice-event" href="../pages/notificaciones.html?notice=notice-event"><span class="preview-dot" style="background:#f28a27"></span><span><strong>Feria de emprendimiento</strong><small>Conoce la programación de las actividades de esta semana.</small></span></a>
 <a class="preview-notice" data-notice-target="notice-schedule" href="../pages/notificaciones.html?notice=notice-schedule"><span class="preview-dot" style="background:#20aa91"></span><span><strong>Actualización de horario</strong><small>Se publicó una novedad sobre una de tus clases.</small></span></a>
 <a class="popover-footer" href="../pages/notificaciones.html">Ver todas las notificaciones</a></div></div>
-<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong>Juan Pérez</strong><small>Estudiante</small></div><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong>Juan Pérez</strong><small>Estudiante UNAB</small></div>
+<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong data-user-first-name>Iniciando…</strong><small data-user-role></small></div><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong data-user-full-name>Iniciando…</strong><small data-user-role-full></small></div>
 <a href="../pages/perfil.html" role="menuitem">Mi perfil</a>
 <a href="../pages/configuracion.html" role="menuitem">Configuración</a>
-<a href="../login.html" role="menuitem">Cerrar sesión</a></div></div>
+<a href="../api/logout.php" role="menuitem">Cerrar sesión</a></div></div>
 
 
 </div>
@@ -55,14 +57,53 @@
 <div class="sidebar-promo-shape"></div><p>Tu talento<br/>nos impulsa</p><div class="orange-line"></div>
 </div>
 </aside>
-<main class="main-content">
-<section class="page-hero"><div><p class="eyebrow">Explora tu universidad</p><h1>Lugares y Campus</h1><p>Descubre todo lo que tu campus tiene para ofrecerte.</p></div><div class="page-hero-image"><img alt="Campus UNAB" src="../assets/campus-principal.jpg"/><div><strong>UNAB</strong><span>Formación que<br/>transforma</span></div></div></section>
-<section class="stats-grid four"><article class="stat-card"><span class="stat-icon purple">⌖</span><div><small>Edificios</small><strong>5</strong></div></article><article class="stat-card"><span class="stat-icon orange">♧</span><div><small>Espacios disponibles</small><strong>20+</strong></div></article><article class="stat-card"><span class="stat-icon green">▤</span><div><small>Zonas de estudio</small><strong>3</strong></div></article><article class="stat-card"><span class="stat-icon pink">♡</span><div><small>Espacios del campus</small><strong>12</strong></div></article></section>
-<div class="content-columns campus-layout"><section class="panel map-panel"><div class="panel-heading"><h2>Mapa del campus</h2><span class="text-link">Campus principal</span></div><div class="campus-map"><img alt="Vista del campus universitario" src="../assets/campus-lateral.jpg"/><span class="map-pin pin-one">A</span><span class="map-pin pin-two">B</span><span class="map-pin pin-three">C</span><span class="map-pin pin-four">D</span><div class="map-caption">Selecciona un marcador para explorar los espacios</div></div></section><section class="panel place-list"><h2>Lugares destacados</h2><article><img alt="" src="../assets/campus-principal.jpg"/><div><strong>Biblioteca</strong><small>Consulta y estudio</small></div><b>›</b></article><article><img alt="" src="../assets/estudiantes-campus.jpg"/><div><strong>Bienestar universitario</strong><small>Actividades y acompañamiento</small></div><b>›</b></article><article><img alt="" src="../assets/campus-recursos.jpg"/><div><strong>Auditorio Mayor</strong><small>Eventos y conferencias</small></div><b>›</b></article><article><img alt="" src="../assets/campus-lateral.jpg"/><div><strong>Zonas verdes</strong><small>Descanso y encuentro</small></div><b>›</b></article></section></div>
-<section class="campus-callout"><div><h2>Conoce cada rincón de la UNAB</h2><p>Explora, disfruta y vive tu experiencia universitaria.</p></div><a class="white-button" href="#">Explorar campus ›</a></section>
-<div class="page-slogan">Más que<br/>una universidad<span></span></div>
+<main class="main-content campus-page">
+<section class="page-hero"><div><p class="eyebrow">Explora tu universidad</p><h1>Lugares y Campus</h1><p>Explora los espacios universitarios, consulta sus servicios y guarda tus lugares favoritos.</p></div><div class="page-hero-image"><img alt="Plazoleta principal del campus UNAB" src="../assets/campus-principal.jpg"><div><strong>UNAB</strong><span>Formación que<br>transforma</span></div></div></section>
+<section class="campus-intro-stats stats-grid three"><article class="stat-card"><span class="stat-icon purple">⌖</span><div><small>Campus institucionales</small><strong>3</strong></div></article><article class="stat-card"><span class="stat-icon orange">⌂</span><div><small>Espacios del croquis</small><strong>12</strong></div></article><article class="stat-card"><span class="stat-icon green">★</span><div><small>Tus favoritos</small><strong id="favoritePlaceCount">0</strong></div></article></section>
+<section class="panel campus-explorer-panel">
+    <div class="campus-explorer-heading"><div><span class="eyebrow">Mapa interactivo</span><h2>Explora los campus UNAB</h2><p>Selecciona un campus y después toca un marcador para consultar sus espacios.</p></div><a class="text-link" href="https://unab.edu.co/campus/" target="_blank" rel="noopener">Información institucional ↗</a></div>
+    <div class="campus-tabs" id="campusTabs" role="tablist" aria-label="Seleccionar campus">
+        <button type="button" class="campus-tab active" data-campus="jardin" role="tab" aria-selected="true">El Jardín</button>
+        <button type="button" class="campus-tab" data-campus="csu" role="tab" aria-selected="false">CSU</button>
+        <button type="button" class="campus-tab" data-campus="bosque" role="tab" aria-selected="false">El Bosque</button>
+    </div>
+    <div class="campus-explorer-layout">
+        <div class="campus-map-column">
+            <div class="campus-map-stage" id="campusMapStage">
+<img class="campus-garden-map" src="../assets/campus-jardin-map.webp" alt="Ilustración del campus El Jardín con Bloque B, Biblioteca, Auditorio Mayor, Punto U, Edificio D, Plazoleta, zona de música, espacios E y F, Edificio L, Cafetería y entrada al parqueadero. Las rutas amarilla y azul indican recorridos descendentes según el croquis compartido." loading="eager">
+<div class="campus-map-hotspots" aria-label="Selecciona un lugar del mapa">
+<button class="map-place" type="button" data-campus-place="block-b" style="--x:34%;--y:16%" aria-label="Ver información de Bloque B" title="Bloque B"><span>1</span></button>
+<button class="map-place" type="button" data-campus-place="library" style="--x:60%;--y:22%" aria-label="Ver información de Biblioteca" title="Biblioteca"><span>2</span></button>
+<button class="map-place" type="button" data-campus-place="auditorium" style="--x:18%;--y:35%" aria-label="Ver información de Auditorio Mayor" title="Auditorio Mayor"><span>3</span></button>
+<button class="map-place" type="button" data-campus-place="punto-u" style="--x:21%;--y:49%" aria-label="Ver información de Punto U" title="Punto U"><span>4</span></button>
+<button class="map-place" type="button" data-campus-place="building-d" style="--x:12%;--y:62%" aria-label="Ver información de Edificio D" title="Edificio D"><span>5</span></button>
+<button class="map-place" type="button" data-campus-place="plaza" style="--x:45%;--y:59%" aria-label="Ver información de Plazoleta" title="Plazoleta"><span>6</span></button>
+<button class="map-place" type="button" data-campus-place="music-area" style="--x:63%;--y:45%" aria-label="Ver información de Parte para música" title="Parte para música"><span>7</span></button>
+<button class="map-place" type="button" data-campus-place="space-e" style="--x:68%;--y:31%" aria-label="Ver información de Espacio E" title="Espacio E"><span>8</span></button>
+<button class="map-place" type="button" data-campus-place="space-f" style="--x:70%;--y:46%" aria-label="Ver información de Espacio F" title="Espacio F"><span>9</span></button>
+<button class="map-place" type="button" data-campus-place="building-l" style="--x:93%;--y:48%" aria-label="Ver información de Edificio L" title="Edificio L"><span>10</span></button>
+<button class="map-place" type="button" data-campus-place="cafeteria" style="--x:76%;--y:72%" aria-label="Ver información de Cafetería" title="Cafetería"><span>11</span></button>
+<button class="map-place" type="button" data-campus-place="parking-entry" style="--x:52%;--y:87%" aria-label="Ver información de Entrada parqueadero" title="Entrada parqueadero"><span>12</span></button>
+</div>
+<div class="campus-map-instruction">Selecciona un marcador para consultar el lugar</div>
+</div>
+<div class="campus-other-info" id="otherCampusInfo" hidden></div>
+        </div>
+        <aside class="campus-place-detail" id="campusPlaceDetail" aria-live="polite">
+            <span class="eyebrow">Selecciona un espacio</span><h2>Biblioteca Central Luis Carlos Galán Sarmiento</h2><p>Elige uno de los marcadores del mapa para consultar la información del lugar.</p>
+        </aside>
+    </div>
+</section>
+<div class="campus-lower-grid">
+    <section class="panel campus-directory-panel"><div class="panel-heading"><div><h2>Lugares destacados</h2><p class="section-subtitle">Selecciona un espacio para ver sus detalles.</p></div></div><div class="place-directory" id="placeDirectory"></div></section>
+    <section class="panel campus-favorites-panel" id="favoritePlacesListPanel"><div class="panel-heading"><div><h2>Mis lugares favoritos</h2><p class="section-subtitle">Guarda los espacios que consultas con frecuencia.</p></div><span class="favorite-count-badge" id="favoritePlaceCountLabel">0</span></div><div id="favoritePlacesList"><p class="muted-note">Aún no guardas lugares favoritos.</p></div></section>
+</div>
+<section class="campus-callout"><div><h2>Conoce cada rincón de la UNAB</h2><p>La ubicación de los puntos del mapa es ilustrativa. Verifica rutas y espacios con la señalización oficial del campus.</p></div><a class="white-button" href="https://unab.edu.co/campus/" target="_blank" rel="noopener">Visitar web UNAB <b>↗</b></a></section>
+<div class="page-slogan">Más que<br>una universidad<span></span></div>
 </main>
 <script src="../js/curriculum-data.js"></script>
+<script src="../js/schedule-data.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/features.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 <html lang="es">
 <head>
+<script>document.documentElement.classList.add("auth-checking");</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="#ffffff" name="theme-color"/>
@@ -10,6 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="../css/base.css" rel="stylesheet"/><link href="../css/shell.css" rel="stylesheet"/><link href="../css/components.css" rel="stylesheet"/><link href="../css/pages/notifications.css" rel="stylesheet"/><link href="../css/theme.css" rel="stylesheet"/><link href="../css/responsive.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="../css/interactions.css" rel="stylesheet"/>
+<link href="../css/features.css" rel="stylesheet">
 </head>
 <body data-page="notificaciones">
 <header class="topbar">
@@ -26,10 +28,10 @@
 <a class="preview-notice" data-notice-target="notice-event" href="../pages/notificaciones.html?notice=notice-event"><span class="preview-dot" style="background:#f28a27"></span><span><strong>Feria de emprendimiento</strong><small>Conoce la programación de las actividades de esta semana.</small></span></a>
 <a class="preview-notice" data-notice-target="notice-schedule" href="../pages/notificaciones.html?notice=notice-schedule"><span class="preview-dot" style="background:#20aa91"></span><span><strong>Actualización de horario</strong><small>Se publicó una novedad sobre una de tus clases.</small></span></a>
 <a class="popover-footer" href="../pages/notificaciones.html">Ver todas las notificaciones</a></div></div>
-<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong>Juan Pérez</strong><small>Estudiante</small></div><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong>Juan Pérez</strong><small>Estudiante UNAB</small></div>
+<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong data-user-first-name>Iniciando…</strong><small data-user-role></small></div><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong data-user-full-name>Iniciando…</strong><small data-user-role-full></small></div>
 <a href="../pages/perfil.html" role="menuitem">Mi perfil</a>
 <a href="../pages/configuracion.html" role="menuitem">Configuración</a>
-<a href="../login.html" role="menuitem">Cerrar sesión</a></div></div>
+<a href="../api/logout.php" role="menuitem">Cerrar sesión</a></div></div>
 </div>
 </header>
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
@@ -62,9 +64,9 @@
 <article id="notice-grade" class="notice-item is-unread" data-category="academic"><span class="notice-icon purple">▣</span><div><h3>Nueva calificación disponible</h3><p>Tu calificación de Cálculo Diferencial ya está disponible para consulta.</p><small>Hoy · 9:30 a.m.</small></div><button class="notice-action" type="button">Marcar leída</button></article>
 <article id="notice-event" class="notice-item is-unread" data-category="events"><span class="notice-icon orange">✦</span><div><h3>Feria de emprendimiento UNAB</h3><p>Conoce la programación y los espacios de participación de esta semana.</p><small>Ayer · 3:15 p.m.</small></div><button class="notice-action" type="button">Marcar leída</button></article>
 <article id="notice-schedule" class="notice-item is-unread" data-category="academic"><span class="notice-icon blue">▤</span><div><h3>Recordatorio de evaluación</h3><p>Recuerda revisar los contenidos para tu próxima evaluación.</p><small>Ayer · 10:00 a.m.</small></div><button class="notice-action" type="button">Marcar leída</button></article>
-<article class="notice-item" data-category="services"><span class="notice-icon pink">♡</span><div><h3>Inscripciones a bienestar</h3><p>Ya puedes consultar los talleres y actividades disponibles.</p><small>Hace 2 días</small></div><button class="notice-action" type="button">Marcar leída</button></article>
-<article class="notice-item" data-category="general"><span class="notice-icon green">▣</span><div><h3>Cambio de aula</h3><p>La próxima clase de Programación tendrá lugar en el laboratorio 1.</p><small>Hace 3 días</small></div><button class="notice-action" type="button">Marcar leída</button></article>
-<article class="notice-item" data-category="general"><span class="notice-icon purple">▤</span><div><h3>Actualización de datos</h3><p>Recuerda mantener actualizada tu información de contacto.</p><small>Hace 4 días</small></div><button class="notice-action" type="button">Marcar leída</button></article>
+<article id="notice-wellbeing" class="notice-item" data-category="services"><span class="notice-icon pink">♡</span><div><h3>Inscripciones a bienestar</h3><p>Ya puedes consultar los talleres y actividades disponibles.</p><small>Hace 2 días</small></div><button class="notice-action" type="button">Marcar leída</button></article>
+<article id="notice-classroom" class="notice-item" data-category="general"><span class="notice-icon green">▣</span><div><h3>Cambio de aula</h3><p>La próxima clase de Programación tendrá lugar en el laboratorio 1.</p><small>Hace 3 días</small></div><button class="notice-action" type="button">Marcar leída</button></article>
+<article id="notice-library" class="notice-item" data-category="general"><span class="notice-icon purple">▤</span><div><h3>Actualización de datos</h3><p>Recuerda mantener actualizada tu información de contacto.</p><small>Hace 4 días</small></div><button class="notice-action" type="button">Marcar leída</button></article>
 </section>
 <aside class="panel notification-settings"><h2>Resumen</h2><div class="notification-summary"><div><b id="unreadCount">3</b><small>Sin leer</small></div><div><b>2</b><small>Académicas</small></div><div><b>1</b><small>Eventos</small></div></div><h3>Preferencias de notificación</h3><p class="settings-help">Elige qué avisos deseas recibir en este prototipo.</p>
 <label class="switch-row">Notificaciones académicas<input checked="" data-notification-pref="academic" type="checkbox"/><span></span></label>
@@ -77,6 +79,8 @@
 <div class="page-slogan">Más que<br/>una universidad<span></span></div>
 </main>
 <script src="../js/curriculum-data.js"></script>
+<script src="../js/schedule-data.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/features.js"></script>
 </body>
 </html>

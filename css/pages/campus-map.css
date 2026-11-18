@@ -1,0 +1,63 @@
+.campus-page .campus-intro-stats { margin-top: 0; }
+.campus-explorer-panel { padding: 22px; margin-bottom: 18px; }
+.campus-explorer-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 16px; }
+.campus-explorer-heading h2 { margin: 0; color: var(--text); font-size: 19px; }
+.campus-explorer-heading p { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
+.campus-tabs { display: flex; gap: 7px; overflow-x: auto; padding: 4px 0 14px; scrollbar-width: thin; }
+.campus-tab { flex: 0 0 auto; padding: 9px 14px; border: 1px solid var(--line); border-radius: 18px; background: var(--soft-surface); color: var(--muted); font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.campus-tab:hover { border-color: #a989dd; color: #6733bd; }
+.campus-tab.active { background: linear-gradient(100deg, #5422ad, #8b45c7); border-color: transparent; color: #fff; box-shadow: 0 4px 13px rgba(87,42,171,.18); }
+.campus-explorer-layout { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(270px,.82fr); gap: 18px; align-items: stretch; }
+.campus-map-column { min-width: 0; }
+.campus-map-stage { position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 3/2; border: 1px solid var(--line); border-radius: 17px; background: #e7eadf; box-shadow: inset 0 0 0 1px rgba(55,37,94,.08); }
+.campus-map-stage[hidden], .campus-other-info[hidden] { display: none; }
+.campus-map-stage::after { display: none; }
+.campus-map-stage > img.campus-garden-map { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.campus-map-hotspots { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.campus-map-hotspots .map-place { position: absolute; left: var(--x); top: var(--y); display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 3px solid #fff; border-radius: 50%; background: linear-gradient(140deg,#5521ad,#9b54d3); color: #fff; font: 700 11px 'Shantell Sans',sans-serif; box-shadow: 0 3px 12px rgba(29,17,54,.4); transform: translate(-50%,-50%); cursor: pointer; pointer-events: auto; transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+.campus-map-hotspots .map-place span { display: block; line-height: 1; }
+.campus-map-hotspots .map-place:hover, .campus-map-hotspots .map-place:focus-visible, .campus-map-hotspots .map-place.selected { z-index: 5; transform: translate(-50%,-50%) scale(1.22); background: linear-gradient(140deg,#f28b22,#ffb044); box-shadow: 0 6px 18px rgba(29,17,54,.48); outline: 3px solid rgba(255,255,255,.85); outline-offset: 2px; }
+.campus-map-instruction { position: absolute; z-index: 4; top: 12px; left: 12px; padding: 8px 12px; border-radius: 20px; background: rgba(255,255,255,.94); color: #3c2a66; font-size: 10px; font-weight: 700; box-shadow: 0 3px 12px rgba(25,15,45,.16); pointer-events: none; }
+.campus-place-detail { min-height: 100%; padding: 20px; border: 1px solid var(--line); border-radius: 15px; background: var(--soft-surface); color: var(--text); }
+.place-detail-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.campus-place-detail h2 { margin: 8px 0 5px; color: var(--text); font-size: 19px; line-height: 1.2; }
+.campus-place-detail p { color: var(--muted); font-size: 10px; line-height: 1.65; }
+.campus-place-detail .place-campus-label { margin: 0; color: #7543bd; font-size: 9px; font-weight: 700; }
+.campus-place-detail h3 { margin: 15px 0 8px; font-size: 11px; }
+.campus-place-detail ul, .campus-other-info ul { display: grid; gap: 7px; padding-left: 18px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.campus-place-detail .outline-button { margin-top: 10px; }
+.favorite-place-button { display: grid; place-items: center; flex: 0 0 34px; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: #8c75b8; font-size: 19px; cursor: pointer; transition: transform .2s, background .2s, color .2s; }
+.favorite-place-button:hover { transform: scale(1.1); background: #fff3d9; color: #d28b13; }
+.favorite-place-button.is-favorite { background: #fff1cf; border-color: #f0d18d; color: #c98813; }
+.campus-other-info { min-height: 330px; height: 100%; padding: 28px; border: 1px solid var(--line); border-radius: 17px; background: linear-gradient(145deg,var(--soft-surface),var(--surface)); color: var(--text); }
+.campus-other-info h2 { margin: 7px 0; font-size: 22px; }
+.campus-other-info small { color: var(--muted); font-size: 10px; }
+.campus-other-info p { max-width: 680px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.campus-other-info h3 { margin: 18px 0 8px; font-size: 13px; }
+.campus-lower-grid { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(250px,.8fr); gap: 18px; margin-bottom: 18px; }
+.campus-directory-panel, .campus-favorites-panel { min-width: 0; }
+.place-directory { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.place-directory-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--soft-surface); }
+.place-directory-open { display: block; min-width: 0; padding: 0; border: 0; background: transparent; text-align: left; cursor: pointer; }
+.place-directory-open strong, .place-directory-open small { display: block; }
+.place-directory-open strong { overflow: hidden; color: var(--text); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.place-directory-open small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+.favorite-count-badge { display: grid; place-items: center; min-width: 27px; height: 27px; border-radius: 50%; background: #f2eaff; color: #6733bd; font-size: 10px; font-weight: 700; }
+.favorite-place-chip { margin: 0 5px 7px 0; padding: 8px 10px; border: 1px solid #e5d9f8; border-radius: 18px; background: var(--soft-surface); color: #6534b8; font: inherit; font-size: 9px; cursor: pointer; }
+.campus-favorites-panel .muted-note { margin: 0; }
+.campus-callout { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 24px; margin: 0 0 20px; border-radius: 16px; background: linear-gradient(110deg,#5b27b5,#a04bc5,#f28b27); color: #fff; }
+.campus-callout h2 { margin: 0; font-size: 16px; }
+.campus-callout p { max-width: 620px; margin: 5px 0 0; font-size: 10px; line-height: 1.55; }
+.campus-page .page-slogan { margin-bottom: 22px; }
+body.dark-mode .campus-tab { background: #302544; color: #d7c9eb; border-color: #4b3b62; }
+body.dark-mode .campus-tab.active { background: linear-gradient(100deg,#5422ad,#8b45c7); color: #fff; }
+body.dark-mode .campus-place-detail, body.dark-mode .campus-other-info, body.dark-mode .place-directory-item { background: #302544; border-color: #4b3b62; color: #f0eaff; }
+body.dark-mode .campus-place-detail h2, body.dark-mode .campus-place-detail h3, body.dark-mode .place-directory-open strong, body.dark-mode .campus-other-info h2, body.dark-mode .campus-other-info h3 { color: #f0eaff; }
+body.dark-mode .campus-place-detail p, body.dark-mode .campus-place-detail ul, body.dark-mode .campus-other-info p, body.dark-mode .campus-other-info ul { color: #b8aecf; }
+body.dark-mode .favorite-place-button { background: #3b2b55; border-color: #5a4776; color: #e7d8ff; }
+body.dark-mode .favorite-place-button.is-favorite { background: #5b4725; color: #ffd98b; }
+body.dark-mode .favorite-place-chip { background: #3b2b55; border-color: #5a4776; color: #e7d8ff; }
+body.dark-mode .favorite-count-badge { background: #3b2b55; color: #e7d8ff; }
+body.dark-mode .campus-map-instruction { background: rgba(255,255,255,.94); color: #3c2a66; }
+@media(max-width:950px) { .campus-explorer-layout { grid-template-columns: 1fr; } .campus-place-detail { min-height: 250px; } .campus-lower-grid { grid-template-columns: 1fr; } .campus-other-info { min-height: 250px; } }
+@media(max-width:620px) { .campus-explorer-panel { padding: 14px; } .campus-explorer-heading { flex-direction: column; } .campus-map-stage { aspect-ratio: 3/2; } .campus-map-hotspots .map-place { width: 28px; height: 28px; font-size: 9px; } .campus-map-instruction { top: 7px; left: 7px; padding: 6px 9px; font-size: 8px; } .place-directory { grid-template-columns: 1fr; } .campus-callout { align-items: flex-start; flex-direction: column; } .campus-tabs { padding-bottom: 10px; } }

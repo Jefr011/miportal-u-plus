@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#ffffff">
+<title>Crear cuenta | MiPortal U Plus</title>
+<link href="css/base.css" rel="stylesheet"><link href="css/shell.css" rel="stylesheet"><link href="css/components.css" rel="stylesheet"><link href="css/pages/login.css" rel="stylesheet"><link href="css/pages/register.css" rel="stylesheet"><link href="css/theme.css" rel="stylesheet"><link href="css/responsive.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="css/features.css" rel="stylesheet">
+</head>
+<body class="login-page" data-page="register">
+<header class="login-brand"><a class="portal-logo" href="index.html">MiPortal <span>U Plus+</span></a><div class="unab-logo"><img alt="Logo UNAB" class="logo-img" src="assets/dashboard/logo_UNAB.png"><div><strong>unab</strong><small>Universidad Autónoma<br>de Bucaramanga</small></div></div><a class="text-link" href="login.html">Volver al inicio de sesión</a></header>
+<main class="login-main"><div class="login-photo login-photo-left"><img alt="Campus UNAB" src="assets/campus-lateral.jpg"></div><div class="login-photo login-photo-right"><img alt="Edificio UNAB" src="assets/campus-principal.jpg"></div><div class="login-decoration"></div>
+<form class="login-card register-card" id="registerForm"><p class="eyebrow">Únete a</p><h1>MiPortal <span>U Plus</span></h1><p class="login-intro">Crea tu cuenta de demostración para el prototipo universitario.</p>
+<label>Nombre completo<input name="name" autocomplete="name" maxlength="90" required placeholder="Tu nombre"></label>
+<label>Correo electrónico<input name="email" type="email" autocomplete="email" required placeholder="nombre@correo.com"></label>
+<label>Tipo de cuenta<select name="role" id="accountRole"><option value="student">Estudiante</option><option value="teacher">Docente</option></select></label>
+<label>Programa o área<select name="program"><option>Ingeniería de Sistemas</option><option>Administración de Empresas</option><option>Ingeniería Industrial</option><option>Derecho</option><option>Psicología</option><option>Comunicación Social</option><option>Facultad de Ingeniería</option><option>Otro programa o área</option></select></label>
+<p class="role-note">El rol es demostrativo para este prototipo académico; no valida una vinculación real con la universidad.</p>
+<label>Contraseña<input name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label>
+<label>Confirmar contraseña<input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Repite tu contraseña"></label>
+<button class="primary-button login-submit" type="submit">Crear cuenta <b>→</b></button><p class="login-feedback" id="registerFeedback" aria-live="polite"></p><a class="forgot-link" href="login.html">Ya tengo una cuenta</a>
+</form></main>
+<script src="js/features.js"></script>
+</body></html>

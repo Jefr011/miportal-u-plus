@@ -2,6 +2,7 @@
 
 <html lang="es">
 <head>
+<script>document.documentElement.classList.add("auth-checking");</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="#ffffff" name="theme-color"/>
@@ -13,6 +14,7 @@
 <link href="../css/base.css" rel="stylesheet"/><link href="../css/shell.css" rel="stylesheet"/><link href="../css/components.css" rel="stylesheet"/><link href="../css/pages/grades.css" rel="stylesheet"/><link href="../css/theme.css" rel="stylesheet"/><link href="../css/responsive.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="../css/interactions.css" rel="stylesheet"/>
 <link href="../css/pages/academic-data.css" rel="stylesheet"/>
+<link href="../css/features.css" rel="stylesheet">
 </head>
 <body data-page="calificaciones">
 <header class="topbar">
@@ -29,10 +31,10 @@
 <a class="preview-notice" data-notice-target="notice-event" href="../pages/notificaciones.html?notice=notice-event"><span class="preview-dot" style="background:#f28a27"></span><span><strong>Feria de emprendimiento</strong><small>Conoce la programación de las actividades de esta semana.</small></span></a>
 <a class="preview-notice" data-notice-target="notice-schedule" href="../pages/notificaciones.html?notice=notice-schedule"><span class="preview-dot" style="background:#20aa91"></span><span><strong>Actualización de horario</strong><small>Se publicó una novedad sobre una de tus clases.</small></span></a>
 <a class="popover-footer" href="../pages/notificaciones.html">Ver todas las notificaciones</a></div></div>
-<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong>Juan Pérez</strong><small>Estudiante</small></div><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong>Juan Pérez</strong><small>Estudiante UNAB</small></div>
+<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong data-user-first-name>Iniciando…</strong><small data-user-role></small></div><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong data-user-full-name>Iniciando…</strong><small data-user-role-full></small></div>
 <a href="../pages/perfil.html" role="menuitem">Mi perfil</a>
 <a href="../pages/configuracion.html" role="menuitem">Configuración</a>
-<a href="../login.html" role="menuitem">Cerrar sesión</a></div></div>
+<a href="../api/logout.php" role="menuitem">Cerrar sesión</a></div></div>
 
 
 </div>
@@ -58,12 +60,52 @@
 </aside>
 <main class="main-content">
 <section class="page-hero"><div><p class="eyebrow">Tu rendimiento</p><h1>Calificaciones e información académica</h1><p>Consulta tus notas y revisa tu progreso académico.</p></div><div class="page-hero-image"><img alt="Campus UNAB" src="../assets/campus-principal.jpg"/><div><strong>UNAB</strong><span>Formación que<br/>transforma</span></div></div></section>
+<div class="student-grade-view" data-role="student">
 <section class="stats-grid four"><article class="stat-card"><span class="stat-icon purple">▣</span><div><small>Periodo actual</small><strong id="gradeCurrentPeriod">2026-4</strong></div></article><article class="stat-card"><span class="stat-icon orange">☆</span><div><small>Promedio actual</small><strong id="gradeAverage">4.2</strong></div></article><article class="stat-card"><span class="stat-icon green">▤</span><div><small>Créditos del periodo</small><strong id="gradeCredits">18</strong></div></article><article class="stat-card"><span class="stat-icon pink">✓</span><div><small>Estado académico</small><strong>Activo</strong></div></article></section>
 <div class="content-columns"><section class="panel grades-panel"><div class="panel-heading"><div><h2>Calificaciones del periodo</h2><small class="data-demo-note">Notas ilustrativas para el prototipo</small></div><select class="filter-select" id="gradePeriodSelect" aria-label="Seleccionar periodo académico"></select></div><div class="table-wrap"><table><thead><tr><th>Asignatura</th><th>Créditos</th><th>Nota</th><th>Estado</th></tr></thead><tbody id="gradeTableBody"></tbody></table></div></section>
 <aside class="panel academic-info"><h2>Información académica</h2><div class="info-row"><b>Programa</b><span>Ingeniería de Sistemas</span></div><div class="info-row"><b>Nivel</b><span id="gradeLevel">4.º nivel curricular</span></div><div class="info-row"><b>Modalidad</b><span>Presencial</span></div><div class="info-row"><b>Créditos pendientes</b><span id="gradePendingCredits">133 créditos del plan por cursar</span></div><div class="promo-mini"><strong>Tu esfuerzo construye tu futuro</strong><small>Sigue avanzando en tus metas académicas.</small></div></aside></div>
+<section class="panel grade-calculator" id="gradeCalculator">
+<div class="calculator-heading">
+<div><p class="eyebrow">Herramienta académica</p><h2>Calculadora de notas</h2><p>Calcula cuánto llevas y qué nota necesitas para aprobar con 3,0.</p></div>
+<div class="calculator-pass-mark"><strong>3,0</strong><small>Nota mínima para pasar</small></div>
+</div>
+<div class="calculator-controls">
+<label for="calculatorCourseSelect">Asignatura</label>
+<select id="calculatorCourseSelect" class="filter-select" aria-label="Seleccionar asignatura para calcular la nota"></select>
+<button id="addAssessment" class="primary-button" type="button">+ Agregar evaluación</button>
+</div>
+<div class="assessment-table-wrap">
+<div class="assessment-table-head"><span>Evaluación</span><span>Nota (0–5)</span><span>Porcentaje (%)</span><span></span></div>
+<div id="assessmentRows" class="assessment-rows" aria-live="polite"></div>
+</div>
+<div class="calculator-summary">
+<div><small>Nota acumulada</small><strong id="calculatorAccumulated">0,00 / 5,00</strong></div>
+<div><small>Porcentaje calificado</small><strong id="calculatorGradedWeight">0%</strong></div>
+<div><small>Porcentaje pendiente</small><strong id="calculatorPendingWeight">100%</strong></div>
+</div>
+<div id="calculatorFeedback" class="calculator-feedback" role="status" aria-live="polite">Agrega las evaluaciones y sus porcentajes para calcular tu resultado.</div>
+<p class="calculator-note">La suma de los porcentajes no puede superar el 100%. Las evaluaciones sin nota y el porcentaje aún no asignado se consideran pendientes. Los datos se guardan en este navegador.</p>
+</section>
+</div>
+<section class="panel teacher-gradebook" id="teacherGradebook" data-role="teacher" hidden>
+<div class="panel-heading"><div><p class="eyebrow">Panel docente</p><h2>Registro de calificaciones</h2><p class="section-subtitle">Registra notas para estudiantes y periodos de 2026.</p></div></div>
+<form id="teacherGradeForm" class="teacher-grade-form">
+<label>Nombre del estudiante<input name="studentName" required maxlength="90" placeholder="Nombre completo"></label>
+<label>Correo del estudiante<input name="studentEmail" type="email" required placeholder="estudiante@correo.com"></label>
+<label>Periodo<select name="period" id="teacherGradePeriod"><option>2026-1</option><option>2026-2</option><option>2026-3</option><option selected>2026-4</option></select></label>
+<label>Asignatura<select name="course" id="teacherGradeCourse" required></select></label>
+<label>Evaluación<input name="assessment" required maxlength="80" placeholder="Ej. Parcial 1"></label>
+<label>Nota (0 a 5)<input name="grade" type="number" min="0" max="5" step="0.1" required placeholder="4.2"></label>
+<div class="teacher-grade-form-actions"><p id="teacherGradeFeedback" class="feature-feedback" aria-live="polite">Las notas registradas se asocian al correo del estudiante.</p><button class="primary-button" type="submit">Guardar calificación</button></div>
+</form>
+<div class="teacher-grade-records"><h3>Notas registradas por ti</h3><div id="teacherGradeRecords"><p class="muted-note">Todavía no has registrado calificaciones.</p></div></div>
+</section>
+
 <div class="page-slogan">Más que<br/>una universidad<span></span></div>
 </main>
 <script src="../js/curriculum-data.js"></script>
+<script src="../js/schedule-data.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/features.js"></script>
 </body>
 </html>

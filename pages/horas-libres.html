@@ -2,6 +2,7 @@
 
 <html lang="es">
 <head>
+<script>document.documentElement.classList.add("auth-checking");</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="#ffffff" name="theme-color"/>
@@ -10,6 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="../css/base.css" rel="stylesheet"/><link href="../css/shell.css" rel="stylesheet"/><link href="../css/components.css" rel="stylesheet"/><link href="../css/pages/hours-free.css" rel="stylesheet"/><link href="../css/theme.css" rel="stylesheet"/><link href="../css/responsive.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="../css/interactions.css" rel="stylesheet"/>
+<link href="../css/features.css" rel="stylesheet">
 </head>
 <body data-page="horas-libres">
 <header class="topbar">
@@ -26,10 +28,10 @@
 <a class="preview-notice" data-notice-target="notice-event" href="../pages/notificaciones.html?notice=notice-event"><span class="preview-dot" style="background:#f28a27"></span><span><strong>Feria de emprendimiento</strong><small>Conoce la programación de las actividades de esta semana.</small></span></a>
 <a class="preview-notice" data-notice-target="notice-schedule" href="../pages/notificaciones.html?notice=notice-schedule"><span class="preview-dot" style="background:#20aa91"></span><span><strong>Actualización de horario</strong><small>Se publicó una novedad sobre una de tus clases.</small></span></a>
 <a class="popover-footer" href="../pages/notificaciones.html">Ver todas las notificaciones</a></div></div>
-<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong>Juan Pérez</strong><small>Estudiante</small></div><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong>Juan Pérez</strong><small>Estudiante UNAB</small></div>
+<div class="header-menu-wrap profile-wrap"><button aria-controls="profilePopover" aria-expanded="false" class="profile-trigger" id="profileToggle" type="button"><img alt="Foto de perfil" class="profile-photo" src="../assets/perfil.jpg"/><div class="user-name"><strong data-user-first-name>Iniciando…</strong><small data-user-role></small></div><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></button><div aria-label="Menú de usuario" class="profile-popover" hidden="True" id="profilePopover" role="menu"><div class="profile-popover-user"><strong data-user-full-name>Iniciando…</strong><small data-user-role-full></small></div>
 <a href="../pages/perfil.html" role="menuitem">Mi perfil</a>
 <a href="../pages/configuracion.html" role="menuitem">Configuración</a>
-<a href="../login.html" role="menuitem">Cerrar sesión</a></div></div>
+<a href="../api/logout.php" role="menuitem">Cerrar sesión</a></div></div>
 </div>
 </header>
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
@@ -53,16 +55,34 @@
 <section class="stats-grid three hours-stats">
 <article class="stat-card"><span class="stat-icon purple">◷</span><div><small>Horas libres realizadas</small><strong id="hoursCompletedStat">48 h</strong><em>Acumulado de toda la carrera · meta 80 h</em></div></article>
 <article class="stat-card"><span class="stat-icon orange">◉</span><div><small>Horas registradas esta semana</small><strong id="hoursWeekStat">9 h</strong><em>Participación de esta semana</em></div></article>
-<a class="stat-card hours-upcoming-stat" href="#upcomingHoursEvents"><span class="stat-icon green">✦</span><div><small>Próximas actividades</small><strong>3</strong><em>Ver eventos e inscripciones</em></div><b>›</b></a>
+<a class="stat-card hours-upcoming-stat" href="#upcomingHoursEvents"><span class="stat-icon green">✦</span><div><small>Próximas actividades</small><strong id="hoursUpcomingCount">3</strong><em>Actividades disponibles</em></div><b>›</b></a>
 </section>
 <div class="content-columns hours-top-grid">
 <section class="panel" id="upcomingHoursEvents"><div class="panel-heading"><div><h2>Próximos eventos de horas libres</h2><p class="section-subtitle">Selecciona una actividad para consultar los detalles.</p></div><span class="text-link">Participa y suma horas</span></div>
-<div class="hours-event" data-day-offset="2"><span class="hours-event-icon purple">✦</span><div><strong>Jornada de bienestar universitario</strong><small class="dynamic-event-date"></small><p>Apoya las actividades de bienestar y convivencia en el campus.</p></div><span class="hours-value">3 h</span></div>
-<div class="hours-event" data-day-offset="5"><span class="hours-event-icon orange">♡</span><div><strong>Voluntariado ambiental</strong><small class="dynamic-event-date"></small><p>Participa en la jornada de cuidado de zonas verdes.</p></div><span class="hours-value">4 h</span></div>
-<div class="hours-event" data-day-offset="9"><span class="hours-event-icon green">▤</span><div><strong>Apoyo en feria académica</strong><small class="dynamic-event-date"></small><p>Colabora con la orientación de nuevos estudiantes.</p></div><span class="hours-value">5 h</span></div>
+<div class="hours-event" data-event-id="demo-wellbeing" data-day-offset="2" data-start-time="09:00" data-hours="3" data-place="Campus El Jardín"><span class="hours-event-icon purple">✦</span><div><strong>Jornada de bienestar universitario</strong><small class="dynamic-event-date"></small><p>Apoya las actividades de bienestar y convivencia en el campus.</p></div><span class="hours-value">3 h</span></div>
+<div class="hours-event" data-event-id="demo-environment" data-day-offset="5" data-start-time="08:00" data-hours="4" data-place="Zonas verdes · Campus El Jardín"><span class="hours-event-icon orange">♡</span><div><strong>Voluntariado ambiental</strong><small class="dynamic-event-date"></small><p>Participa en la jornada de cuidado de zonas verdes.</p></div><span class="hours-value">4 h</span></div>
+<div class="hours-event" data-event-id="demo-fair" data-day-offset="9" data-start-time="14:00" data-hours="5" data-place="Auditorio Mayor"><span class="hours-event-icon green">▤</span><div><strong>Apoyo en feria académica</strong><small class="dynamic-event-date"></small><p>Colabora con la orientación de nuevos estudiantes.</p></div><span class="hours-value">5 h</span></div>
 </section>
 <section class="panel hours-summary"><h2>Tu participación</h2><div class="hours-total-circle"><strong>48</strong><small>de 80 horas</small></div><p>Has acumulado 48 de las 80 horas libres requeridas durante toda la carrera.</p><div class="hours-progress"><span style="width:60%"></span></div><div class="hours-summary-foot"><span>Meta de la carrera</span><strong>48 / 80 h</strong></div></section>
 </div>
+<section class="panel activity-registration-panel" id="activityRegistration" data-role="teacher" hidden>
+    <div class="panel-heading"><div><h2>Publicar actividad de Horas Libres</h2><p class="section-subtitle">Como docente puedes crear actividades para que los estudiantes se inscriban.</p></div><span class="request-status">Panel docente</span></div>
+    <form class="hours-activity-form" id="hoursActivityForm">
+        <label>Nombre de la actividad<input name="title" type="text" maxlength="90" required placeholder="Ej. Jornada de integración"></label>
+        <label>Lugar donde se realizará<input name="place" type="text" maxlength="90" required placeholder="Ej. Campus El Jardín, Plazoleta"></label>
+        <div class="hours-form-row"><label>Fecha<input name="date" type="date" required></label><label>Hora de inicio<input name="startTime" type="time" value="09:00" required></label><label>Duración en horas<input name="hours" type="number" min="1" max="8" step="1" value="2" required></label></div>
+        <label>Tipo<select name="category"><option>Servicio universitario</option><option>Actividad cultural</option><option>Actividad deportiva</option><option>Voluntariado</option><option>Apoyo académico</option></select></label>
+        <label>Descripción<textarea name="description" rows="3" maxlength="400" placeholder="Describe la actividad, sus objetivos y requisitos."></textarea></label>
+        <div class="hours-form-actions"><p id="hoursActivityFeedback" class="feature-feedback" aria-live="polite">Las actividades publicadas estarán disponibles para inscripción. El reconocimiento de horas puede requerir validación.</p><button class="primary-button" type="submit">Publicar actividad <b>→</b></button></div>
+    </form>
+    <div class="hours-request-heading"><h3>Actividades publicadas por ti</h3><span><strong id="hoursPendingCount">0</strong> publicadas</span></div>
+    <div class="hours-request-list" id="hoursRequestList"><p class="muted-note">Todavía no has publicado actividades.</p></div>
+</section>
+<section class="panel student-hours-guidance" data-role="student" hidden>
+    <div class="panel-heading"><div><h2>Inscripciones a Horas Libres</h2><p class="section-subtitle">Selecciona una actividad disponible para inscribirte.</p></div><span class="request-status">Estudiante</span></div>
+    <p class="student-hours-note">Las actividades son publicadas por docentes. Cuando te inscribes, quedan identificadas en tu horario semanal con una marca especial y se conservan en tu cuenta de este navegador y en el prototipo PHP.</p>
+    <div class="hours-request-list" id="studentEnrollmentList"><p class="muted-note">Aún no tienes inscripciones. Revisa los próximos eventos y selecciona “Inscribirme”.</p></div>
+</section>
 <section class="panel hours-leaderboard"><div class="panel-heading"><div><h2>Top 12 · Horas libres esta semana</h2><p class="section-subtitle">Clasificación demostrativa de participación estudiantil.</p></div><span class="leaderboard-badge">Esta semana</span></div>
 <div class="table-wrap"><table><thead><tr><th>Posición</th><th>Estudiante</th><th>Programa</th><th>Horas esta semana</th></tr></thead><tbody id="hoursLeaderboardBody">
 <tr class="leaderboard-row"><td><span class="rank rank-one">1</span></td><td>Valentina Gómez</td><td>Ingeniería de Sistemas</td><td><strong>16 h</strong></td></tr>
@@ -70,7 +90,7 @@
 <tr class="leaderboard-row"><td><span class="rank rank-three">3</span></td><td>Isabella Martínez</td><td>Comunicación Social</td><td><strong>12 h</strong></td></tr>
 <tr class="leaderboard-row"><td>4</td><td>Santiago Pérez</td><td>Ingeniería Industrial</td><td><strong>11 h</strong></td></tr>
 <tr class="leaderboard-row"><td>5</td><td>Mariana Rojas</td><td>Psicología</td><td><strong>10 h</strong></td></tr>
-<tr class="leaderboard-row current-student"><td>6</td><td>Juan Pérez <small>(Tú)</small></td><td>Ingeniería de Sistemas</td><td><strong>9 h</strong></td></tr>
+<tr class="leaderboard-row current-student"><td>6</td><td data-current-student-name>Tu cuenta <small>(Tú)</small></td><td>Ingeniería de Sistemas</td><td><strong>9 h</strong></td></tr>
 <tr class="leaderboard-row"><td>7</td><td>Samuel Torres</td><td>Ingeniería de Mercados</td><td><strong>8 h</strong></td></tr>
 <tr class="leaderboard-row"><td>8</td><td>Luciana Herrera</td><td>Derecho</td><td><strong>7 h</strong></td></tr>
 <tr class="leaderboard-row"><td>9</td><td>Andrés Castillo</td><td>Ingeniería de Sistemas</td><td><strong>6 h</strong></td></tr>
@@ -81,6 +101,8 @@
 <div class="page-slogan">Más que<br/>una universidad<span></span></div>
 </main>
 <script src="../js/curriculum-data.js"></script>
+<script src="../js/schedule-data.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/features.js"></script>
 </body>
 </html>

@@ -1,8 +1,12 @@
 *{box-sizing:border-box;font-family:'Shantell Sans',sans-serif}
-:root{--purple:#5524b2;--deep:#321477;--orange:#f47712;--text:#29195d;--muted:#8290ad;--surface:#fff;--page:#f8f9ff;--line:#efedf7;--shadow:0 6px 22px rgba(48,25,104,.07)}
+:root{--purple:#5524b2;--deep:#321477;--orange:#f47712;--text:#29195d;--muted:#8290ad;--surface:#fff;--soft-surface:#f8f5ff;--page:#f8f9ff;--line:#efedf7;--shadow:0 6px 22px rgba(48,25,104,.07)}
 html{min-width:320px;min-height:100%;background:var(--page);scroll-behavior:smooth}
 body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(ellipse at 78% 55%,rgba(231,225,255,.34),transparent 42%),var(--page);overflow-x:hidden}
 body::before{content:"";position:fixed;z-index:0;top:-65px;left:-55px;width:120px;height:105px;background:linear-gradient(135deg,#7135c8,#b78aff);border-radius:0 0 90% 0;transform:rotate(-8deg);pointer-events:none}
 a{color:inherit}
 button,input,select{font:inherit}
 [hidden]{display:none!important}
+
+html.auth-checking body{visibility:hidden}
+.account-modal{max-width:760px;width:min(760px,94vw);max-height:88vh;overflow:auto}.account-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.account-form-grid label{display:grid;gap:6px;color:var(--text);font-size:12px;font-weight:700}.account-form-grid input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-size:12px}.account-form-wide{grid-column:1/-1}.profile-edit-link{border:0;background:none;font:inherit;cursor:pointer}
+@media(max-width:600px){.account-form-grid{grid-template-columns:1fr}.account-form-wide{grid-column:auto}}

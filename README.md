@@ -1,60 +1,90 @@
-# MiPortal U Plus+
+# MiPortal U Plus
 
-Prototipo de interfaz universitaria. Abre `index.html` con Live Server para recorrerlo.
+Prototipo académico de rediseño de la experiencia estudiantil de la Universidad Autónoma de Bucaramanga (UNAB). Está construido con HTML, CSS, JavaScript y PHP, con datos de demostración y persistencia local/de servidor para los flujos incluidos.
 
 ## Estructura
 
 - `index.html`: dashboard.
-- `pages/`: páginas interiores.
-- `css/base.css`: variables, tipografía y reinicio.
-- `css/shell.css`: encabezado, navegación lateral y menús desplegables.
-- `css/components.css`: tarjetas, paneles, botones y componentes compartidos.
-- `css/pages/`: estilos específicos de cada página.
-- `css/theme.css`: modo claro/oscuro y animación del selector.
-- `css/responsive.css`: adaptación a escritorio, tabletas y móviles.
-- `js/app.js`: interacciones del prototipo.
-- `assets/`: imágenes y recursos.
-- `wareframes/`: wireframes de referencia.
+- `login.html` y `register.html`: inicio de sesión y registro de cuenta del prototipo.
+- `pages/`: Mis cursos, Horario, Calendario, Calificaciones, Notificaciones, Recursos, Horas Libres, Lugares y Campus, Perfil y Configuración.
+- `css/`: estilos base, estructura compartida, componentes, interacciones, tema, responsive y estilos individuales por página.
+- `js/`: lógica principal, funcionalidades adicionales, datos del pensum y horario semanal de demostración.
+- `api/`: endpoints PHP para cuentas, sesión, publicación e inscripción a Horas Libres y consulta/registro de calificaciones.
+- `assets/`: imágenes utilizadas por las páginas.
+- `docs/`: propuesta, fuentes consultadas, checklist de implementación y wireframes originales, incluido el croquis del Campus El Jardín.
 
-## Interacciones incluidas
+## Las diez funcionalidades adicionales
 
-- Calendario basado en la fecha local del navegador, navegación entre meses, selección de días y eventos demostrativos.
-- Flechas de las clases del dashboard abren una ficha de detalle.
-- Menú desplegable de notificaciones y menú de perfil.
-- Filtros de notificaciones, marcar como leídas y preferencias guardadas localmente.
-- Tema claro/oscuro persistente con transición animada del indicador.
-- Horas libres con próximas actividades y ranking ficticio de 12 estudiantes.
+1. **Notificaciones de eventos importantes:** menú de vista previa, estados leída/no leída, filtros por categoría y preferencias persistentes.
+2. **Calendario académico integrado:** fechas de referencia, agenda diaria y eventos personales guardados en el navegador.
+3. **Recordatorios de horario y clases:** avisos opcionales del navegador antes de una clase; requieren permiso y que el portal permanezca abierto.
+4. **Estadísticas de Horas Libres:** acumulado frente a la meta demostrativa de 80 horas, actividades disponibles, inscripciones y clasificación semanal de ejemplo.
+5. **Buscador general:** sugerencias de páginas, servicios, lugares y contenidos, con selección por teclado y Enter.
+6. **Modo oscuro:** tema persistente, estilos para las páginas y control de reducción de movimiento.
+7. **Lugares favoritos:** marcadores de espacios del campus guardados por cuenta en el navegador y visibles en el dashboard.
+8. **Mapa visual de campus:** mapa esquemático interactivo de El Jardín reconstruido a partir del croquis del equipo; CSU y El Bosque tienen fichas descriptivas.
+9. **Accesos rápidos personalizables:** selección y orden de accesos del dashboard.
+10. **Recomendaciones de servicios:** sugerencias según las secciones y búsquedas realizadas en el prototipo, junto con accesos a servicios institucionales.
 
-Los datos y las acciones son demostrativos. No hay conexión con sistemas oficiales de la UNAB, autenticación real ni almacenamiento en servidor.
+## Roles del prototipo
+
+El registro permite crear una cuenta de demostración como estudiante o docente. El rol seleccionado sirve para probar las vistas y permisos; no verifica una vinculación real con la UNAB.
+
+- **Estudiante:** consulta sus datos y notas, se inscribe en actividades de Horas Libres y ve esas inscripciones marcadas en su horario.
+- **Docente:** publica actividades de Horas Libres y registra calificaciones de estudiantes existentes mediante su correo registrado.
+
+El servidor PHP valida los permisos de cada endpoint según la sesión. El control de rol es demostrativo y no debe utilizarse como mecanismo de autorización institucional real.
+
+## Ejecutar el proyecto
+
+Para probar únicamente la navegación y las funciones locales, puedes abrir `index.html` con Live Server. Para probar registro, inicio de sesión, publicación de actividades, inscripciones y registro/consulta de calificaciones, utiliza PHP 8 o superior.
+
+Desde la carpeta raíz del proyecto ejecuta:
+
+```bash
+php -S localhost:8000
+```
+
+Abre `http://localhost:8000/index.html`. Para crear una cuenta, entra en `register.html`, completa los datos y selecciona el rol de demostración. Luego podrás ingresar desde `login.html`.
+
+### Flujo docente
+
+1. Crea una cuenta de demostración con rol Docente.
+2. Entra en Horas Libres y publica una actividad.
+3. En Calificaciones, selecciona periodo y asignatura, escribe el correo de un estudiante registrado y guarda la evaluación.
+
+### Flujo estudiante
+
+1. Crea una cuenta con rol Estudiante.
+2. En Horas Libres, inscríbete en una actividad disponible.
+3. La inscripción queda guardada y se incorpora al horario con una marca visual diferenciada.
+4. Consulta las calificaciones que un docente haya asociado al correo de tu cuenta.
+
+## Persistencia
+
+Preferencias, tema, favoritos, accesos rápidos, notificaciones leídas, eventos personales, calculadoras e inscripciones de respaldo se guardan en `localStorage` por usuario cuando corresponde. Las cuentas, sesiones, actividades publicadas, inscripciones y calificaciones compartidas utilizan endpoints PHP y archivos JSON en un directorio temporal del servidor. Las contraseñas se guardan con `password_hash()` y se validan con `password_verify()`.
+
+Este almacenamiento está pensado para una demostración académica. No es una base de datos de producción, y los datos del servidor pueden borrarse cuando el entorno temporal se limpie.
+
+## Lugares y Campus
+
+La navegación contiene únicamente **El Jardín**, **CSU** y **El Bosque**. El mapa de El Jardín es un SVG interactivo y esquemático trazado a partir de `docs/wireframes/croquis-campus-jardin.png`. Conserva las posiciones relativas y nombres visibles en el croquis; E y F se dejan como puntos pendientes de identificación. El dibujo no está a escala y no es un plano institucional oficial. CSU y El Bosque muestran información general porque no se proporcionó un croquis de esos campus.
+
+## Servicios institucionales
+
+Los accesos de Correo UNAB, Cosmos, Office 365 y Canvas utilizan los enlaces publicados en el portal oficial de Acceso UNAB: https://acceso.unab.edu.co/. El inicio de sesión externo depende de las credenciales y permisos institucionales correspondientes.
+
+## Datos demostrativos y límites
+
+Los horarios, salones, docentes, calificaciones iniciales, eventos académicos, estadísticas de Horas Libres y ranking incluyen datos de ejemplo. El pensum se organiza en los cuatro periodos de demostración `2026-1` a `2026-4`. Las actividades publicadas por docentes y las inscripciones se conservan en el almacenamiento del prototipo; el reconocimiento de horas requiere validación y no se acredita automáticamente.
+
+Consulta `docs/funcionalidades-implementadas.md` para la lista de alcance y `docs/fuentes-campus.md` para las referencias y límites del mapa.
 
 
-## Actualización de interacciones y plan de estudios
+## Correcciones de cuenta y campus
 
-- Los estilos se conservan separados por capa general y página; `css/interactions.css` reúne interacciones transversales.
-- `js/curriculum-data.js` contiene los nueve niveles y créditos del folleto UNAB de Ingeniería de Sistemas suministrado para este proyecto.
-- El prototipo limita los periodos académicos disponibles a `2026-1`, `2026-2`, `2026-3` y `2026-4`. No se ofrecen periodos posteriores porque aún no se han cursado.
-- Docentes, aulas, franjas horarias, notas, actividades y ranking son datos de demostración y no proceden del folleto.
-- El folleto menciona ocho semestres en la sección de duración, pero su tabla de plan de estudios presenta nueve niveles, incluido el nivel 9 con práctica profesional. Se conserva la tabla completa sin reinterpretar esa diferencia.
-- La página Lugares y campus se mantiene sin cambios funcionales ni visuales, según lo solicitado.
-
-
-## Últimos ajustes
-
-- Corregido el contraste de la fecha del dashboard en modo oscuro.
-- Las notificaciones del menú compacto navegan a la página completa y posicionan la notificación seleccionada; no abren un cuadro modal.
-- Periodos limitados a `2026-1` hasta `2026-4`.
-- Horarios distintos para cada uno de los cuatro periodos.
-- Calendario conserva su diseño e incorpora eventos personales guardados en el navegador, con indicador verde azulado.
-- Las asignaturas de `2026-4` aparecen como `Cursando` en calificaciones.
-- Las próximas actividades de horas libres se mantienen estáticas.
-
-
-## Correcciones adicionales (17 de noviembre de 2026)
-
-- La fecha del bloque de próximos eventos tiene contraste explícito en modo oscuro.
-- Los avisos del menú pequeño enlazan a la página de Notificaciones y posicionan el aviso seleccionado, sin abrir un cuadro modal.
-- Los periodos disponibles se limitan a `2026-1`, `2026-2`, `2026-3` y `2026-4`; los valores guardados de años posteriores se normalizan a `2026-4`.
-- Cada periodo de 2026 tiene una distribución de horario distinta.
-- El calendario permite agregar eventos personales, que se guardan en `localStorage` y se identifican con un punto verde azulado.
-- Las asignaturas de `2026-4` aparecen con estado `Cursando`.
-- Las actividades próximas de Horas libres son estáticas y no tienen hover ni acción de apertura.
+- `assets/campus-jardin-map.webp` es la ilustración isométrica generada a partir del croquis del Campus El Jardín. Los marcadores HTML superpuestos abren la ficha de cada lugar. La imagen es conceptual y no está a escala.
+- Las páginas internas consultan `api/session.php`; si no existe una sesión válida, redirigen al inicio de sesión. Ya no se utiliza un estudiante Juan Pérez de demostración como identidad por defecto.
+- El nombre corto del encabezado muestra el primer nombre de la cuenta autenticada. El menú desplegable muestra el nombre completo.
+- El perfil permite editar tanto campos ya diligenciados como campos vacíos. Los cambios se guardan mediante `api/update-profile.php`.
+- Seguridad permite cambiar la contraseña mediante `api/change-password.php`, verificando la contraseña actual y almacenando el nuevo hash.

@@ -1,4 +1,4 @@
-body.dark-mode{--text:#f0eaff;--muted:#b8aecf;--surface:#241b38;--page:#171226;--line:#403352;--shadow:0 8px 24px rgba(0,0,0,.22);background:radial-gradient(ellipse at 78% 55%,rgba(90,63,130,.16),transparent 42%),#171226;color:#f0eaff}
+body.dark-mode{--soft-surface:#302544;--text:#f0eaff;--muted:#b8aecf;--surface:#241b38;--page:#171226;--line:#403352;--shadow:0 8px 24px rgba(0,0,0,.22);background:radial-gradient(ellipse at 78% 55%,rgba(90,63,130,.16),transparent 42%),#171226;color:#f0eaff}
 body.dark-mode .topbar,body.dark-mode .sidebar,body.dark-mode .panel,body.dark-mode .quick-card,body.dark-mode .stat-card,body.dark-mode .course-card,body.dark-mode .recommend-card,body.dark-mode .service-card,body.dark-mode .notification-popover,body.dark-mode .profile-popover{background:#241b38;border-color:#403352;color:#f0eaff}
 body.dark-mode .nav-item{color:#e6dcff}body.dark-mode .nav-item:hover:not(.active){background:#382851;color:#fff}body.dark-mode .nav-item.active,body.dark-mode .nav-item.active:hover{color:white}
 body.dark-mode .quick-card h2,body.dark-mode .panel h2,body.dark-mode .course-card h3,body.dark-mode .notice-item h3,body.dark-mode .stat-card strong,body.dark-mode .service-card h3,body.dark-mode .recommend-card h3,body.dark-mode .activity-list strong,body.dark-mode .events-heading h2,body.dark-mode .credits strong,body.dark-mode .profile-card h2{color:#f0eaff}
@@ -33,3 +33,25 @@ body.dark-mode .date-box strong,
 body.dark-mode .date-box small { color: #f0eaff; }
 body.dark-mode .date-box small { opacity: .82; }
 body.dark-mode .status.in-progress { background: #4b3b62; color: #e6d4ff; border-color: #72569a; }
+
+body.dark-mode .today-schedule-date{color:#b8aecf}
+body.dark-mode .schedule-empty-state{background:#302544;border-color:#58466f;color:#d6caea}
+body.dark-mode .schedule-empty-state strong{color:#f0eaff}
+body.dark-mode .schedule-empty-state span{color:#b8aecf}
+body.dark-mode .grade-calculator .calculator-heading h2{color:#f0eaff}
+body.dark-mode .grade-calculator .calculator-heading p:not(.eyebrow){color:#b8aecf}
+body.dark-mode .calculator-pass-mark,body.dark-mode .calculator-summary>div{background:#38294e;color:#e9ddff}
+body.dark-mode .calculator-pass-mark strong,body.dark-mode .calculator-summary strong{color:#e9ddff}
+body.dark-mode .calculator-pass-mark small,body.dark-mode .calculator-summary small{color:#b8aecf}
+body.dark-mode .calculator-controls label{color:#d6caea}
+body.dark-mode .assessment-table-wrap{border-color:#453656}
+body.dark-mode .assessment-table-head{background:#302544;color:#c6b8df}
+body.dark-mode .assessment-row{border-color:#453656}
+body.dark-mode .assessment-row input{background:#302544;color:#f0eaff;border-color:#4b3b62}
+body.dark-mode .assessment-row input::placeholder{color:#9689ad}
+body.dark-mode .assessment-remove{background:#573343;color:#ffd7df}
+body.dark-mode .assessment-remove:hover{background:#704054}
+body.dark-mode .calculator-feedback{background:#38294e;color:#e2d4fc}
+body.dark-mode .calculator-feedback[data-state="success"]{background:#23483f;color:#a9e5d1}
+body.dark-mode .calculator-feedback[data-state="error"]{background:#57343a;color:#ffd0cd}
+body.dark-mode .calculator-note{color:#b8aecf}

@@ -150,7 +150,23 @@ document.addEventListener("DOMContentLoaded", () => {
             { title: "Lugares y campus", detail: "Espacios e instalaciones", terms: "lugares campus mapa salones edificios", href: "pages/lugares-campus.html" },
             { title: "Mi perfil", detail: "Información personal", terms: "perfil usuario cuenta datos personales", href: "pages/perfil.html" },
             { title: "Configuración", detail: "Apariencia y preferencias", terms: "configuración tema oscuro claro animaciones preferencias", href: "pages/configuracion.html" },
-            { title: "Notificaciones", detail: "Avisos académicos y eventos", terms: "notificaciones avisos mensajes correos", href: "pages/notificaciones.html" }
+            { title: "Notificaciones", detail: "Avisos académicos y eventos", terms: "notificaciones avisos mensajes correos", href: "pages/notificaciones.html" },
+            { title: "Mapa interactivo del campus", detail: "Ubica edificios y espacios UNAB", terms: "mapa campus biblioteca edificio ingeniería plazoleta auditorio reloj solar", href: "pages/lugares-campus.html" },
+            { title: "Mis lugares favoritos", detail: "Espacios que guardaste", terms: "favoritos lugares campus guardados", href: "pages/lugares-campus.html#favoritePlacesListPanel" },
+            { title: "Registrar una actividad de Horas Libres", detail: "Propón una actividad o lugar", terms: "registrar actividad lugar horas libres voluntariado", href: "pages/horas-libres.html#activityRegistration" },
+            { title: "Correo institucional", detail: "Comunicaciones académicas", terms: "correo email institucional outlook unab", href: "pages/servicios.html#correo" },
+            { title: "Cosmos", detail: "Herramientas institucionales", terms: "cosmos plataforma", href: "pages/servicios.html#cosmos" },
+            { title: "Canvas", detail: "Recursos académicos", terms: "canvas aula virtual", href: "pages/servicios.html#canvas" },
+            { title: "Office 365", detail: "Herramientas de productividad", terms: "office microsoft 365", href: "pages/servicios.html#office" },
+            { title: "MUSUNAB", detail: "Museo universitario de colecciones", terms: "musunab museo colecciones", href: "pages/lugares-campus.html?place=musunab" },
+            { title: "Reloj Solar", detail: "Espacio cultural entre El Jardín y CSU", terms: "reloj solar ruta cósmica", href: "pages/lugares-campus.html?place=sundial" },
+            { title: "Biblioteca Central", detail: "Luis Carlos Galán Sarmiento", terms: "biblioteca central libros catálogo salas estudio", href: "pages/lugares-campus.html?place=library" },
+            { title: "Facultad de Ingeniería", detail: "Campus El Jardín", terms: "facultad ingeniería bloque ingeniería laboratorios", href: "pages/lugares-campus.html?place=engineering" },
+            { title: "Edificio Armando Puyana Puyana", detail: "Campus El Jardín", terms: "armando puyana edificio administrativo", href: "pages/lugares-campus.html?place=admin" },
+            { title: "Plazoleta principal", detail: "Campus El Jardín", terms: "plazoleta principal encuentro", href: "pages/lugares-campus.html?place=plaza" },
+            { title: "Auditorio Mayor Carlos Gómez Albarracín", detail: "Campus El Jardín", terms: "auditorio mayor conferencias eventos", href: "pages/lugares-campus.html?place=auditorium" },
+            { title: "Campus El Bosque", detail: "Facultad de Ciencias de la Salud", terms: "campus bosque salud floridablanca", href: "pages/lugares-campus.html" },
+            { title: "Centro de Servicios Universitarios CSU", detail: "Bienestar, lenguas y UNAB Tec", terms: "csu centro servicios universitarios bienestar lenguas", href: "pages/lugares-campus.html" }
         ];
         let selectedIndex = -1;
         let currentResults = [];
@@ -191,52 +207,108 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const noticeItems = [...document.querySelectorAll(".notice-item")];
+    const notificationUser = (() => {
+        try { return JSON.parse(localStorage.getItem("miportal-current-user") || "null"); }
+        catch { return null; }
+    })();
+    const notificationUserId = notificationUser?.id || "guest";
+    const notificationReadKey = `miportal-notifications-read:${notificationUserId}`;
+    const knownNoticeIds = ["notice-grade", "notice-event", "notice-schedule", "notice-wellbeing", "notice-classroom", "notice-library"];
+    const initialUnreadIds = ["notice-grade", "notice-event", "notice-schedule"];
+    const readNoticeIds = new Set((() => {
+        try {
+            const saved = JSON.parse(localStorage.getItem(notificationReadKey) || "[]");
+            return Array.isArray(saved) ? saved : [];
+        } catch { return []; }
+    })());
+    const persistReadNotices = () => {
+        try { localStorage.setItem(notificationReadKey, JSON.stringify([...readNoticeIds])); } catch {}
+    };
+    const isNoticeRead = id => readNoticeIds.has(id) || !initialUnreadIds.includes(id);
+    const applyNoticeState = item => {
+        const id = item.id;
+        const read = isNoticeRead(id);
+        item.classList.toggle("is-read", read);
+        item.classList.toggle("is-unread", !read);
+        const action = item.querySelector(".notice-action");
+        if (action) {
+            action.textContent = read ? "Leída" : "Marcar leída";
+            action.disabled = read;
+        }
+    };
+    const markNoticeRead = id => {
+        if (!id) return;
+        readNoticeIds.add(id);
+        persistReadNotices();
+        const node = document.getElementById(id);
+        if (node) applyNoticeState(node);
+        updateUnreadCount();
+    };
+    const updateUnreadCount = () => {
+        const unread = knownNoticeIds.filter(id => !isNoticeRead(id)).length;
+        document.querySelectorAll(".notification-count").forEach(badge => {
+            badge.textContent = String(unread);
+            badge.hidden = unread === 0;
+            badge.setAttribute("aria-label", `${unread} notificaciones sin leer`);
+        });
+        const unreadLabel = document.getElementById("unreadCount");
+        if (unreadLabel) unreadLabel.textContent = String(unread);
+        document.querySelectorAll(".popover-heading small").forEach(label => {
+            label.textContent = unread === 1 ? "1 nueva" : `${unread} nuevas`;
+        });
+        document.querySelectorAll(".preview-notice").forEach(link => {
+            const id = link.dataset.noticeTarget;
+            const read = !id || isNoticeRead(id);
+            link.classList.toggle("is-read", read);
+            link.classList.toggle("is-unread", !read);
+            const dot = link.querySelector(".preview-dot");
+            if (dot) dot.hidden = read;
+        });
+    };
+    noticeItems.forEach(item => applyNoticeState(item));
     document.querySelectorAll(".preview-notice").forEach(link => {
         link.addEventListener("click", event => {
             const destination = link.getAttribute("href");
             if (!destination) return;
             event.preventDefault();
+            markNoticeRead(link.dataset.noticeTarget);
             window.location.assign(new URL(destination, window.location.href).href);
         });
     });
-    const updateUnreadCount = () => {
-        const hasNotificationList = Boolean(document.querySelector(".notification-list"));
-        const unread = hasNotificationList ? document.querySelectorAll(".notice-item.is-unread").length : Number(document.querySelector(".notification-count")?.textContent || 3);
-        const count = document.getElementById("unreadCount");
-        if (count) count.textContent = unread;
-        if (hasNotificationList) document.querySelectorAll(".notification-count").forEach(badge => badge.textContent = unread);
-    };
     const filterNotices = filter => noticeItems.forEach(item => { item.hidden = filter !== "all" && item.dataset.category !== filter; });
     document.querySelectorAll(".tab-button[data-filter]").forEach(button => button.addEventListener("click", () => {
         document.querySelectorAll(".tab-button[data-filter]").forEach(tab => tab.classList.toggle("active", tab === button));
         filterNotices(button.dataset.filter);
     }));
-    noticeItems.forEach(item => item.querySelector(".notice-action")?.addEventListener("click", event => {
-        const action = event.currentTarget;
-        item.classList.remove("is-unread"); item.classList.add("is-read"); action.textContent = "Leída"; action.disabled = true; updateUnreadCount();
+    noticeItems.forEach(item => item.querySelector(".notice-action")?.addEventListener("click", () => {
+        markNoticeRead(item.id);
     }));
     document.querySelector(".mark-all-read")?.addEventListener("click", () => {
-        noticeItems.forEach(item => { item.classList.remove("is-unread"); item.classList.add("is-read"); const action=item.querySelector(".notice-action"); if(action){action.textContent="Leída";action.disabled=true;} });
+        knownNoticeIds.forEach(id => readNoticeIds.add(id));
+        persistReadNotices();
+        noticeItems.forEach(applyNoticeState);
         updateUnreadCount();
     });
     const preferenceToggles = [...document.querySelectorAll("[data-notification-pref]")];
     preferenceToggles.forEach(toggle => {
-        const key = `miportal-pref-${toggle.dataset.notificationPref}`;
+        const key = `miportal-pref-${notificationUserId}-${toggle.dataset.notificationPref}`;
         const saved = readStorage(key);
         if (saved !== null) toggle.checked = saved === "true";
         toggle.addEventListener("change", () => {
             writeStorage(key, String(toggle.checked));
             if (toggle.dataset.notificationPref === "preview") document.querySelectorAll(".preview-notice").forEach(item => item.hidden = !toggle.checked);
-            const feedback = document.getElementById("preferenceFeedback"); if (feedback) feedback.textContent = "Preferencia actualizada correctamente.";
+            const feedback = document.getElementById("preferenceFeedback");
+            if (feedback) feedback.textContent = "Preferencia actualizada correctamente.";
         });
     });
-    const previewPref = readStorage("miportal-pref-preview", "true") === "true";
+    const previewPref = readStorage(`miportal-pref-${notificationUserId}-preview`, "true") === "true";
     document.querySelectorAll(".preview-notice").forEach(item => item.hidden = !previewPref);
     updateUnreadCount();
     const requestedNoticeId = new URLSearchParams(window.location.search).get("notice");
     if (requestedNoticeId && document.getElementById(requestedNoticeId)) {
         document.querySelectorAll(".tab-button[data-filter]").forEach(tab => tab.classList.toggle("active", tab.dataset.filter === "all"));
         filterNotices("all");
+        markNoticeRead(requestedNoticeId);
         const requestedNotice = document.getElementById(requestedNoticeId);
         requestedNotice.classList.add("notice-targeted");
         window.setTimeout(() => requestedNotice.scrollIntoView({ behavior: root.classList.contains("reduce-motion") ? "auto" : "smooth", block: "center" }), 80);
@@ -308,84 +380,453 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const gradeSelect=document.getElementById("gradePeriodSelect");
     if (gradeSelect) { renderGrades(gradeSelect.value); gradeSelect.addEventListener("change",()=>{savePeriod(gradeSelect.value);renderGrades(gradeSelect.value);}); }
-
-    const dayNames = ["Lunes","Martes","Miércoles","Jueves","Viernes"];
-    const scheduleSlots = ["6:00 a.m. – 8:00 a.m.","8:00 a.m. – 10:00 a.m.","10:00 a.m. – 12:00 m.","1:00 p.m. – 3:00 p.m.","3:00 p.m. – 5:00 p.m."];
-    const scheduleColors = ["purple","orange","green","pink","blue"];
-    const schedulePatterns = {
-        "2026-1": [{day:0,slot:0},{day:0,slot:1},{day:1,slot:3},{day:2,slot:0},{day:3,slot:4},{day:4,slot:2}],
-        "2026-2": [{day:0,slot:4},{day:1,slot:0},{day:1,slot:2},{day:2,slot:3},{day:3,slot:0},{day:3,slot:1},{day:4,slot:4},{day:2,slot:1}],
-        "2026-3": [{day:0,slot:2},{day:0,slot:3},{day:1,slot:1},{day:2,slot:4},{day:3,slot:2},{day:4,slot:0},{day:4,slot:3}],
-        "2026-4": [{day:0,slot:0},{day:0,slot:2},{day:2,slot:1},{day:2,slot:2},{day:3,slot:3},{day:4,slot:0}]
+    const calculatorCourseSelect = document.getElementById("calculatorCourseSelect");
+    const assessmentRows = document.getElementById("assessmentRows");
+    const calculatorFeedback = document.getElementById("calculatorFeedback");
+    const calculatorStorageKey = (period, course) => `miportal-grade-calculator:${period}:${encodeURIComponent(course)}`;
+    const readAssessmentData = (period, course) => {
+        try {
+            const saved = JSON.parse(readStorage(calculatorStorageKey(period, course), "[]"));
+            return Array.isArray(saved) ? saved : [];
+        } catch {
+            return [];
+        }
     };
-    const makeSchedule = (courses, period) => {
-        const placement = schedulePatterns[period] || schedulePatterns["2026-4"];
-        return courses.map((course,index) => ({
-            course,
-            day: placement[index % placement.length].day,
-            slot: placement[index % placement.length].slot,
-            room: ["Aula B-203 · Edificio C","Laboratorio D-1 · Edificio D","Aula C-204 · Edificio C","Aula B-102 · Edificio B","Laboratorio de informática · Edificio D"][((index * 3) + levelFromPeriod(period)) % 5],
-            color: scheduleColors[(index + (levelFromPeriod(period) || 1)) % scheduleColors.length],
-            professor: ["María Fernanda Gómez","Carlos Andrés Rueda","Laura Jiménez","Andrés Felipe Rojas","Diana Marcela Pérez"][((index + (levelFromPeriod(period) || 1)) * 2) % 5]
+    const saveAssessmentData = () => {
+        if (!calculatorCourseSelect || !assessmentRows || !gradeSelect) return;
+        const rows = [...assessmentRows.querySelectorAll(".assessment-row")].map(row => ({
+            name: row.querySelector("[data-assessment-name]")?.value.trim() || "Evaluación",
+            grade: row.querySelector("[data-assessment-grade]")?.value ?? "",
+            weight: row.querySelector("[data-assessment-weight]")?.value ?? ""
         }));
+        writeStorage(calculatorStorageKey(gradeSelect.value, calculatorCourseSelect.value), JSON.stringify(rows));
     };
-    const schedulePeriodSelect=document.getElementById("schedulePeriodSelect");
-    const renderSchedule=period=>{
-        const grid=document.getElementById("scheduleGrid"); if(!grid) return;
-        const courses=subjectsFor(period); const level=levelFromPeriod(period); const classes=makeSchedule(courses, period);
-        const slots=[0,1,2,3,4];
-        grid.style.gridTemplateColumns="62px repeat(5,minmax(86px,1fr))";
-        grid.innerHTML=`<div class="week-head">Hora</div>${dayNames.map(day=>`<div class="week-head">${day}</div>`).join("")}`;
-        slots.forEach(slot=>{
-            grid.insertAdjacentHTML("beforeend",`<div class="time-cell">${["6:00","8:00","10:00","1:00","3:00"][slot]}</div>`);
-            dayNames.forEach((day,dayIndex)=>{
-                const match=classes.find(item=>item.day===dayIndex && item.slot===slot);
-                if(match){
-                    const index=classes.indexOf(match);
-                    grid.insertAdjacentHTML("beforeend",`<div class="week-cell"><button type="button" class="schedule-chip ${match.color}" data-schedule-index="${index}"><strong>${match.course.name}</strong><small>${scheduleSlots[slot]}</small></button></div>`);
-                } else grid.insertAdjacentHTML("beforeend",`<div class="week-cell"></div>`);
+    const makeAssessmentRow = (assessment = {}) => {
+        const row = document.createElement("div");
+        row.className = "assessment-row";
+        row.innerHTML = `<input type="text" maxlength="48" data-assessment-name aria-label="Nombre de la evaluación" placeholder="Ej. Parcial 1"><input type="number" min="0" max="5" step="0.1" inputmode="decimal" data-assessment-grade aria-label="Nota de la evaluación" placeholder="0 a 5"><input type="number" min="0" max="100" step="0.1" inputmode="decimal" data-assessment-weight aria-label="Porcentaje de la evaluación" placeholder="%"><button type="button" class="assessment-remove" aria-label="Eliminar evaluación" title="Eliminar evaluación">×</button>`;
+        row.querySelector("[data-assessment-name]").value = assessment.name || "";
+        row.querySelector("[data-assessment-grade]").value = assessment.grade ?? "";
+        row.querySelector("[data-assessment-weight]").value = assessment.weight ?? "";
+        return row;
+    };
+    const renderAssessmentRows = () => {
+        if (!calculatorCourseSelect || !assessmentRows) return;
+        const saved = readAssessmentData(gradeSelect?.value || "2026-4", calculatorCourseSelect.value);
+        assessmentRows.replaceChildren();
+        const rows = saved.length ? saved : [{ name: "", grade: "", weight: "" }];
+        rows.forEach(assessment => assessmentRows.appendChild(makeAssessmentRow(assessment)));
+        calculateGradeRequirement();
+    };
+    const setCalculatorFeedback = (message, state = "neutral") => {
+        if (!calculatorFeedback) return;
+        calculatorFeedback.textContent = message;
+        calculatorFeedback.dataset.state = state;
+    };
+    const updateCalculatorMetric = (id, value) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = value;
+    };
+    const calculateGradeRequirement = () => {
+        if (!assessmentRows) return;
+        const rows = [...assessmentRows.querySelectorAll(".assessment-row")];
+        let assignedWeight = 0;
+        let gradedWeight = 0;
+        let weightedPoints = 0;
+        let invalid = "";
+        rows.forEach(row => {
+            const gradeInput = row.querySelector("[data-assessment-grade]");
+            const weightInput = row.querySelector("[data-assessment-weight]");
+            const gradeText = gradeInput.value.trim();
+            const weightText = weightInput.value.trim();
+            const weight = weightText === "" ? 0 : Number(weightText);
+            const grade = gradeText === "" ? null : Number(gradeText);
+            if (!Number.isFinite(weight) || weight < 0 || weight > 100) invalid = "Cada porcentaje debe estar entre 0 y 100.";
+            if (grade !== null && (!Number.isFinite(grade) || grade < 0 || grade > 5)) invalid = "Cada calificación debe estar entre 0,0 y 5,0.";
+            assignedWeight += Number.isFinite(weight) ? weight : 0;
+            if (grade !== null && weight > 0 && Number.isFinite(grade) && Number.isFinite(weight)) {
+                gradedWeight += weight;
+                weightedPoints += grade * weight;
+            }
+            if (grade !== null && weight <= 0) invalid = "Asigna un porcentaje mayor que 0 a cada nota registrada.";
+        });
+        const accumulated = weightedPoints / 100;
+        const pendingWeight = Math.max(0, 100 - gradedWeight);
+        updateCalculatorMetric("calculatorAccumulated", `${accumulated.toFixed(2).replace(".", ",")} / 5,00`);
+        updateCalculatorMetric("calculatorGradedWeight", `${gradedWeight.toFixed(1).replace(/\.0$/, "")}%`);
+        updateCalculatorMetric("calculatorPendingWeight", `${pendingWeight.toFixed(1).replace(/\.0$/, "")}%`);
+        if (invalid) {
+            setCalculatorFeedback(invalid, "error");
+            return;
+        }
+        if (assignedWeight > 100.0001) {
+            setCalculatorFeedback(`Los porcentajes suman ${assignedWeight.toFixed(1)}%. Deben sumar como máximo 100%.`, "error");
+            return;
+        }
+        if (pendingWeight <= 0.0001) {
+            const finalGrade = weightedPoints / 100;
+            setCalculatorFeedback(`Nota final calculada: ${finalGrade.toFixed(2).replace(".", ",")}. ${finalGrade >= 3 ? "¡Aprobaste la asignatura!" : "No alcanzaste la nota mínima de 3,0."}`, finalGrade >= 3 ? "success" : "error");
+            return;
+        }
+        const needed = (300 - weightedPoints) / pendingWeight;
+        if (needed <= 0) {
+            setCalculatorFeedback("Ya tienes asegurada la nota mínima de 3,0. Las evaluaciones pendientes pueden mejorar tu resultado.", "success");
+        } else if (needed > 5) {
+            setCalculatorFeedback(`Necesitarías ${needed.toFixed(2).replace(".", ",")} en el porcentaje pendiente. No es posible alcanzar 3,0 con las evaluaciones restantes.`, "error");
+        } else {
+            setCalculatorFeedback(`Necesitas un promedio mínimo de ${needed.toFixed(2).replace(".", ",")} en el ${pendingWeight.toFixed(1).replace(/\.0$/, "")}% pendiente para aprobar con 3,0.`, "neutral");
+        }
+    };
+    const refreshCalculatorCourses = period => {
+        if (!calculatorCourseSelect) return;
+        const courses = subjectsFor(period);
+        const previous = calculatorCourseSelect.value;
+        calculatorCourseSelect.innerHTML = courses.map(course => `<option value="${course.name.replaceAll('"', '&quot;')}">${course.name}</option>`).join("");
+        if (courses.some(course => course.name === previous)) calculatorCourseSelect.value = previous;
+        if (!courses.length) {
+            assessmentRows?.replaceChildren();
+            setCalculatorFeedback("No hay asignaturas disponibles para el periodo seleccionado.", "neutral");
+            return;
+        }
+        renderAssessmentRows();
+    };
+    if (calculatorCourseSelect && assessmentRows && gradeSelect) {
+        refreshCalculatorCourses(gradeSelect.value);
+        calculatorCourseSelect.addEventListener("change", renderAssessmentRows);
+        document.getElementById("addAssessment")?.addEventListener("click", () => {
+            assessmentRows.appendChild(makeAssessmentRow());
+            saveAssessmentData();
+            calculateGradeRequirement();
+        });
+        assessmentRows.addEventListener("input", () => {
+            saveAssessmentData();
+            calculateGradeRequirement();
+        });
+        assessmentRows.addEventListener("click", event => {
+            const remove = event.target.closest(".assessment-remove");
+            if (!remove) return;
+            remove.closest(".assessment-row")?.remove();
+            if (!assessmentRows.children.length) assessmentRows.appendChild(makeAssessmentRow());
+            saveAssessmentData();
+            calculateGradeRequirement();
+        });
+        gradeSelect.addEventListener("change", () => refreshCalculatorCourses(gradeSelect.value));
+    }
+
+
+    const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+    const scheduleColors = ["purple", "orange", "green", "pink", "blue"];
+    const scheduleTimeZone = window.MiPortalSchedule?.timeZone || "America/Bogota";
+    const getBogotaNow = () => {
+        const parts = new Intl.DateTimeFormat("en-US", {
+            timeZone: scheduleTimeZone,
+            weekday: "long",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23"
+        }).formatToParts(new Date());
+        const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+        const weekdayIndex = { Monday: 0, Tuesday: 1, Wednesday: 2, Thursday: 3, Friday: 4 }[values.weekday] ?? -1;
+        return {
+            weekdayIndex,
+            minutes: Number(values.hour) * 60 + Number(values.minute),
+            dateISO: `${values.year}-${values.month}-${values.day}`,
+            dateLabel: new Intl.DateTimeFormat("es-CO", {
+                timeZone: scheduleTimeZone,
+                weekday: "long",
+                day: "numeric",
+                month: "long"
+            }).format(new Date())
+        };
+    };
+    const timeToMinutes = value => {
+        if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(String(value || ""))) return null;
+        const [hour, minute] = value.split(":").map(Number);
+        return hour * 60 + minute;
+    };
+    const displayTime = value => {
+        const minutes = timeToMinutes(value);
+        if (minutes === null) return "Hora no registrada";
+        const hour24 = Math.floor(minutes / 60);
+        const hour12 = hour24 % 12 || 12;
+        const suffix = hour24 < 12 ? "a. m." : "p. m.";
+        return `${hour12}:${String(minutes % 60).padStart(2, "0")} ${suffix}`;
+    };
+    const getPeriodSchedule = period => {
+        const courses = subjectsFor(period);
+        const scheduleConfig = window.MiPortalSchedule;
+        const placements = scheduleConfig?.patterns?.[period];
+        const slots = scheduleConfig?.slots;
+        if (!Array.isArray(courses) || !Array.isArray(placements) || !Array.isArray(slots)) return [];
+        const classItems = courses.map((course, index) => {
+            const placement = placements[index % placements.length];
+            if (!placement) return null;
+            const slot = slots[placement.slot];
+            if (!slot) return null;
+            const roomIndex = ((index * 3) + (levelFromPeriod(period) || 1)) % scheduleConfig.rooms.length;
+            const professorIndex = ((index + (levelFromPeriod(period) || 1)) * 2) % scheduleConfig.professors.length;
+            return {
+                id: `course-${index}`,
+                index,
+                course: course.name,
+                credits: course.credits,
+                area: course.area,
+                day: placement.day,
+                start: slot.start,
+                end: slot.end,
+                room: scheduleConfig.rooms[roomIndex],
+                professor: scheduleConfig.professors[professorIndex],
+                color: scheduleColors[(index + (levelFromPeriod(period) || 1)) % scheduleColors.length],
+                startMinutes: timeToMinutes(slot.start),
+                endMinutes: timeToMinutes(slot.end),
+                isHoursEvent: false
+            };
+        }).filter(Boolean);
+        const signedUser = (() => {
+            try { return JSON.parse(localStorage.getItem("miportal-current-user") || "null"); }
+            catch { return null; }
+        })();
+        const registrationKey = `miportal-hour-event-registrations:${signedUser?.id || "guest"}`;
+        let enrollments = [];
+        try {
+            const saved = JSON.parse(localStorage.getItem(registrationKey) || "[]");
+            if (Array.isArray(saved)) enrollments = saved;
+        } catch {}
+        const enrolledItems = enrollments.filter(entry => entry.period === period && /^\d{4}-\d{2}-\d{2}$/.test(entry.date || ""))
+            .map((entry, index) => {
+                const [year, month, day] = entry.date.split("-").map(Number);
+                const date = new Date(year, month - 1, day, 12, 0, 0);
+                const weekday = date.getDay();
+                const dayIndex = weekday >= 1 && weekday <= 5 ? weekday - 1 : -1;
+                const startMinutes = timeToMinutes(entry.startTime || "09:00");
+                const duration = Number(entry.hours || 1);
+                if (dayIndex < 0 || startMinutes === null || !Number.isFinite(duration) || duration <= 0) return null;
+                const endMinutes = Math.min(startMinutes + duration * 60, 23 * 60 + 59);
+                const hh = String(Math.floor(endMinutes / 60)).padStart(2, "0");
+                const mm = String(endMinutes % 60).padStart(2, "0");
+                return {
+                    id: `hours-${entry.eventId || index}`,
+                    index: `hours-${entry.eventId || index}`,
+                    course: entry.title || "Actividad de Horas Libres",
+                    credits: 0,
+                    area: "Horas Libres",
+                    day: dayIndex,
+                    start: entry.startTime || "09:00",
+                    end: `${hh}:${mm}`,
+                    room: entry.place || "Campus UNAB",
+                    professor: "Actividad inscrita",
+                    color: "teal",
+                    startMinutes,
+                    endMinutes,
+                    isHoursEvent: true,
+                    eventDate: entry.date,
+                    eventHours: duration,
+                    eventId: entry.eventId
+                };
+            }).filter(Boolean);
+        return [...classItems, ...enrolledItems].sort((a, b) => a.day - b.day || a.startMinutes - b.startMinutes);
+    };
+    const currentAcademicPeriod = () => {
+        const saved = readStorage("miportal-academic-period", "2026-4");
+        return /^2026-[1-4]$/.test(saved) ? saved : "2026-4";
+    };
+    const formatClassTime = item => `${displayTime(item.start)} – ${displayTime(item.end)}`;
+    const scheduleEmptyMessage = (period, todayOnly = false) => todayOnly
+        ? `<div class="schedule-empty-state"><strong>No hay clases programadas hoy</strong><span>El horario de referencia de ${period} no tiene asignaturas para este día.</span></div>`
+        : `<div class="schedule-empty-state"><strong>No hay asignaturas programadas</strong><span>No encontramos materias para el periodo ${period}.</span></div>`;
+    const renderDashboardTodaySchedule = () => {
+        const list = document.getElementById("todayScheduleList");
+        if (!list) return;
+        const today = getBogotaNow();
+        const period = currentAcademicPeriod();
+        const dateLabel = document.getElementById("todayScheduleDate");
+        if (dateLabel) {
+            const formatted = today.dateLabel;
+            dateLabel.textContent = `${formatted.charAt(0).toUpperCase()}${formatted.slice(1)} · ${period}`;
+        }
+        const allClasses = getPeriodSchedule(period);
+        if (!allClasses.length) {
+            list.innerHTML = scheduleEmptyMessage(period, true);
+            return;
+        }
+        if (today.weekdayIndex < 0) {
+            list.innerHTML = `<div class="schedule-empty-state"><strong>Hoy no hay clases de lunes a viernes</strong><span>El horario semanal no registra clases para este día.</span></div>`;
+            return;
+        }
+        const todaysClasses = allClasses
+            .filter(item => item.day === today.weekdayIndex && item.endMinutes > today.minutes && (!item.eventDate || item.eventDate === today.dateISO))
+            .sort((a, b) => a.startMinutes - b.startMinutes);
+        if (!todaysClasses.length) {
+            list.innerHTML = `<div class="schedule-empty-state"><strong>Ya no tienes clases pendientes hoy</strong><span>El horario de ${dayNames[today.weekdayIndex].toLowerCase()} para ${period} no tiene más clases por comenzar.</span></div>`;
+            return;
+        }
+        list.innerHTML = todaysClasses.map(item => {
+            const place = item.room ? item.room : "Ubicación no registrada";
+            const inProgress = item.startMinutes <= today.minutes && item.endMinutes > today.minutes;
+            const status = inProgress ? "En curso · " : "";
+            const enrollmentLabel = item.isHoursEvent ? `<em class="schedule-enrollment-tag">Inscrito · Horas Libres</em>` : "";
+            return `<div class="class-row ${item.isHoursEvent ? "enrolled-hours-row" : ""}" role="button" tabindex="0" data-class-title="${item.course.replaceAll('"', '&quot;')}" data-class-time="${formatClassTime(item)}" data-class-place="${place.replaceAll('"', '&quot;')}" data-class-professor="${(item.professor || "").replaceAll('"', '&quot;')}" data-class-kind="${item.isHoursEvent ? "hours" : "course"}" data-class-date="${item.eventDate || ""}"><span class="class-color ${item.color}"></span><div><small>${status}${formatClassTime(item)}</small><strong>${item.course}</strong>${enrollmentLabel}<span>${place}</span></div><span class="row-arrow" aria-hidden="true">›</span></div>`;
+        }).join("");
+        list.querySelectorAll(".class-row").forEach(row => {
+            row.addEventListener("click", () => openDashboardClass(row));
+            row.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openDashboardClass(row);
+                }
             });
         });
-        grid.querySelectorAll("[data-schedule-index]").forEach(button=>button.addEventListener("click",()=>{
-            const item=classes[Number(button.dataset.scheduleIndex)];
-            openInfoDialog(item.course.name,`<div class="detail-grid"><div><small>Día</small><strong>${dayNames[item.day]}</strong></div><div><small>Horario</small><strong>${scheduleSlots[item.slot]}</strong></div><div><small>Créditos</small><strong>${item.course.credits}</strong></div><div><small>Salón demostrativo</small><strong>${item.room}</strong></div></div><p>Docente de referencia: ${item.professor}. La asignación de grupos, docentes, aulas y horas es ilustrativa; consulta la programación oficial para confirmar tu matrícula.</p>`);
-        }));
-        const periodNode=document.getElementById("scheduleCurrentPeriod"); if(periodNode) periodNode.textContent=period;
-        const countNode=document.getElementById("scheduleCourseCount"); if(countNode) countNode.textContent=courses.length;
-        const creditNode=document.getElementById("scheduleCredits"); if(creditNode) creditNode.textContent=courses.reduce((sum,c)=>sum+c.credits,0);
-        const upcoming=document.getElementById("upcomingSchedule");
-        if(upcoming) upcoming.innerHTML=classes.slice(0,5).map(item=>`<div class="upcoming-item"><b class="dot ${item.color}-bg"></b><div><strong>${item.course.name}</strong><small>${dayNames[item.day]} · ${scheduleSlots[item.slot]} · ${item.room}</small></div></div>`).join("") || `<p>No hay clases asociadas a este periodo.</p>`;
-        grid.dataset.period=period;
-        grid._scheduleClasses=classes;
     };
-    if(schedulePeriodSelect){
+    renderDashboardTodaySchedule();
+    window.setInterval(renderDashboardTodaySchedule, 60000);
+
+    const schedulePeriodSelect = document.getElementById("schedulePeriodSelect");
+    const renderSchedule = period => {
+        const grid = document.getElementById("scheduleGrid");
+        if (!grid) return;
+        const classes = getPeriodSchedule(period);
+        const courses = subjectsFor(period);
+        const headers = `<div class="week-head">Hora</div>${dayNames.map(day => `<div class="week-head">${day}</div>`).join("")}`;
+        grid.style.gridTemplateColumns = "72px repeat(5,minmax(86px,1fr))";
+        grid.innerHTML = headers;
+        if (!classes.length) {
+            grid.insertAdjacentHTML("beforeend", `<div class="schedule-empty-state schedule-empty-grid">${scheduleEmptyMessage(period)}</div>`);
+        } else {
+            const intervals = [...new Set(classes.map(item => `${item.start}|${item.end}`))].sort((a, b) => timeToMinutes(a.split("|")[0]) - timeToMinutes(b.split("|")[0]));
+            intervals.forEach(interval => {
+                const [start, end] = interval.split("|");
+                grid.insertAdjacentHTML("beforeend", `<div class="time-cell">${displayTime(start)}<span>–</span>${displayTime(end)}</div>`);
+                dayNames.forEach((day, dayIndex) => {
+                    const matching = classes.filter(item => item.day === dayIndex && item.start === start && item.end === end);
+                    const content = matching.map(item => `<button type="button" class="schedule-chip ${item.color} ${item.isHoursEvent ? "hours-event-chip" : ""}" data-schedule-index="${item.id}"><strong>${item.course}</strong>${item.room ? `<small>${item.isHoursEvent ? `${item.eventDate} · ${item.room}` : item.room}</small>` : ""}${item.isHoursEvent ? `<em>Inscrito · Horas Libres</em>` : ""}</button>`).join("");
+                    grid.insertAdjacentHTML("beforeend", `<div class="week-cell"><div class="schedule-class-stack">${content}</div></div>`);
+                });
+            });
+        }
+        grid.querySelectorAll("[data-schedule-index]").forEach(button => button.addEventListener("click", () => {
+            const item = classes.find(entry => entry.id === button.dataset.scheduleIndex);
+            if (!item) return;
+            const course = courses.find(entry => entry.name === item.course);
+            const details = [
+                `<div><small>Día</small><strong>${dayNames[item.day]}</strong></div>`,
+                `<div><small>Horario</small><strong>${formatClassTime(item)}</strong></div>`,
+                item.isHoursEvent ? `<div><small>Fecha</small><strong>${item.eventDate}</strong></div>` : (course ? `<div><small>Créditos</small><strong>${course.credits}</strong></div>` : ""),
+                item.room ? `<div><small>${item.isHoursEvent ? "Lugar" : "Salón"}</small><strong>${item.room}</strong></div>` : "",
+                item.isHoursEvent ? `<div><small>Estado</small><strong>Inscripción guardada</strong></div>` : (item.professor ? `<div><small>Docente de referencia</small><strong>${item.professor}</strong></div>` : "")
+            ].filter(Boolean).join("");
+            openInfoDialog(item.course, `<div class="detail-grid">${details}</div><p>${item.isHoursEvent ? "Esta actividad de Horas Libres está asociada a tu inscripción y se conserva en tu horario." : `Horario demostrativo del prototipo para el periodo ${period}. Las franjas, aulas y docentes son ilustrativos y no corresponden a una matrícula oficial.`}</p>`);
+        }));
+        const periodNode = document.getElementById("scheduleCurrentPeriod");
+        if (periodNode) periodNode.textContent = period;
+        const uniqueCourseNames = [...new Set(classes.map(item => item.course))];
+        const countNode = document.getElementById("scheduleCourseCount");
+        if (countNode) countNode.textContent = uniqueCourseNames.length;
+        const credits = uniqueCourseNames.reduce((sum, name) => sum + (courses.find(course => course.name === name)?.credits || 0), 0);
+        const creditNode = document.getElementById("scheduleCredits");
+        if (creditNode) creditNode.textContent = credits;
+        const upcoming = document.getElementById("upcomingSchedule");
+        if (upcoming) {
+            const now = getBogotaNow();
+            const upcomingClasses = [...classes].map(item => ({
+                ...item,
+                daysUntil: item.eventDate ? Math.max(0, Math.round((new Date(`${item.eventDate}T12:00:00-05:00`) - new Date(`${now.dateISO}T12:00:00-05:00`)) / 86400000)) : (item.day - now.weekdayIndex + 7) % 7
+            })).filter(item => {
+                if (item.eventDate) return item.eventDate >= now.dateISO && (item.eventDate !== now.dateISO || item.endMinutes > now.minutes);
+                if (now.weekdayIndex < 0) return true;
+                if (item.daysUntil === 0) return item.endMinutes > now.minutes;
+                return true;
+            }).sort((a, b) => a.daysUntil - b.daysUntil || a.startMinutes - b.startMinutes).slice(0, 5);
+            upcoming.innerHTML = upcomingClasses.length ? upcomingClasses.map(item => `<div class="upcoming-item"><b class="dot ${item.color}-bg"></b><div><strong>${item.course}</strong><small>${item.eventDate ? item.eventDate : dayNames[item.day]} · ${formatClassTime(item)}${item.room ? ` · ${item.room}` : ""}</small></div></div>`).join("") : `<p>No hay próximas clases registradas para este periodo.</p>`;
+        }
+        grid.dataset.period = period;
+        grid._scheduleClasses = classes;
+    };
+    if (schedulePeriodSelect) {
         renderSchedule(schedulePeriodSelect.value);
-        schedulePeriodSelect.addEventListener("change",()=>{savePeriod(schedulePeriodSelect.value);renderSchedule(schedulePeriodSelect.value);});
-    }
-    document.getElementById("downloadSchedule")?.addEventListener("click",()=>{
-        const grid=document.getElementById("scheduleGrid"); if(!grid) return;
-        const classes=grid._scheduleClasses || []; const period=grid.dataset.period || "2026-4";
-        const canvas=document.createElement("canvas"); canvas.width=1800; canvas.height=1040;
-        const ctx=canvas.getContext("2d");
-        ctx.fillStyle="#f8f7ff";ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle="#5121ad";ctx.font="bold 50px 'Shantell Sans', Arial";ctx.fillText("Mi horario semanal",70,85);
-        ctx.fillStyle="#7f739b";ctx.font="28px Arial";ctx.fillText(`Ingeniería de Sistemas · Periodo ${period}`,72,135);
-        const left=205,top=195,colW=300,rowH=150; const headers=["Hora",...dayNames];
-        headers.forEach((label,index)=>{const x=index===0?55:left+(index-1)*colW;ctx.fillStyle=index===0?"#ebe3fb":"#5524b2";ctx.fillRect(x,top,index===0?150:colW-8,72);ctx.fillStyle=index===0?"#4b2a7f":"#ffffff";ctx.font="bold 25px Arial";ctx.fillText(label,x+18,top+45);});
-        const labels=["6:00 a.m. – 8:00 a.m.","8:00 a.m. – 10:00 a.m.","10:00 a.m. – 12:00 m.","1:00 p.m. – 3:00 p.m.","3:00 p.m. – 5:00 p.m."];
-        labels.forEach((label,slot)=>{
-            const y=top+72+slot*rowH;
-            ctx.fillStyle="#eee9f7";ctx.fillRect(55,y,150,rowH-7);ctx.fillStyle="#51436e";ctx.font="20px Arial";ctx.fillText(label,65,y+65);
-            dayNames.forEach((day,dayIndex)=>{const x=left+dayIndex*colW;ctx.fillStyle="#ffffff";ctx.fillRect(x,y,colW-8,rowH-7);ctx.strokeStyle="#e3ddee";ctx.strokeRect(x,y,colW-8,rowH-7);const item=classes.find(c=>c.day===dayIndex&&c.slot===slot);if(item){const palette={purple:"#eee5ff",orange:"#fff0dd",green:"#def7ef",pink:"#ffeaf3",blue:"#e9f1ff"};ctx.fillStyle=palette[item.color]||"#eee5ff";ctx.beginPath();if(typeof ctx.roundRect === "function"){ctx.roundRect(x+10,y+10,colW-28,rowH-27,16);}else{ctx.rect(x+10,y+10,colW-28,rowH-27);}ctx.fill();ctx.fillStyle="#30204f";ctx.font="bold 19px Arial";const words=item.course.name.split(" ");let line="",lines=[];words.forEach(word=>{const test=line?line+" "+word:word;if(ctx.measureText(test).width>colW-55){lines.push(line);line=word;}else line=test;});if(line)lines.push(line);lines.slice(0,3).forEach((value,i)=>ctx.fillText(value,x+25,y+48+i*25));ctx.font="17px Arial";ctx.fillStyle="#665783";ctx.fillText(item.room,x+25,y+132);}});
+        schedulePeriodSelect.addEventListener("change", () => {
+            savePeriod(schedulePeriodSelect.value);
+            renderSchedule(schedulePeriodSelect.value);
+            renderDashboardTodaySchedule();
         });
-        const link=document.createElement("a");link.download=`horario-${period}.png`;link.href=canvas.toDataURL("image/png");link.click();
+    }
+    window.addEventListener("miportal:schedule-updated", () => {
+        renderDashboardTodaySchedule();
+        if (schedulePeriodSelect) renderSchedule(schedulePeriodSelect.value);
+    });
+    window.addEventListener("storage", event => {
+        if (event.key?.startsWith("miportal-hour-event-registrations:")) {
+            renderDashboardTodaySchedule();
+            if (schedulePeriodSelect) renderSchedule(schedulePeriodSelect.value);
+        }
+    });
+    document.getElementById("downloadSchedule")?.addEventListener("click", () => {
+        const grid = document.getElementById("scheduleGrid");
+        if (!grid) return;
+        const classes = grid._scheduleClasses || [];
+        if (!classes.length) {
+            openInfoDialog("Horario no disponible", "Todavía no hay horarios oficiales registrados para descargar.");
+            return;
+        }
+        const period = grid.dataset.period || "2026-4";
+        const width = 1700;
+        const maxRows = Math.max(...dayNames.map((day, dayIndex) => classes.filter(item => item.day === dayIndex).length), 1);
+        const rowHeight = 125;
+        const height = 190 + maxRows * rowHeight;
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#f8f7ff";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "#5121ad";
+        ctx.font = "bold 48px Arial";
+        ctx.fillText("Mi horario semanal", 55, 62);
+        ctx.fillStyle = "#7f739b";
+        ctx.font = "25px Arial";
+        ctx.fillText(`Ingeniería de Sistemas · Periodo ${period}`, 58, 103);
+        const left = 55;
+        const top = 130;
+        const colWidth = 318;
+        dayNames.forEach((day, dayIndex) => {
+            const x = left + dayIndex * colWidth;
+            ctx.fillStyle = "#5524b2";
+            ctx.fillRect(x, top, colWidth - 10, 48);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 22px Arial";
+            ctx.fillText(day, x + 16, top + 31);
+            const dayClasses = classes.filter(item => item.day === dayIndex).sort((a, b) => a.startMinutes - b.startMinutes);
+            dayClasses.forEach((item, rowIndex) => {
+                const y = top + 58 + rowIndex * rowHeight;
+                ctx.fillStyle = ["#eee5ff", "#fff0dd", "#def7ef", "#ffeaf3", "#e9f1ff"][rowIndex % 5];
+                ctx.beginPath();
+                ctx.roundRect(x + 3, y, colWidth - 18, rowHeight - 12, 14);
+                ctx.fill();
+                ctx.fillStyle = "#30204f";
+                ctx.font = "bold 18px Arial";
+                ctx.fillText(item.course.slice(0, 31), x + 16, y + 33);
+                ctx.font = "15px Arial";
+                ctx.fillStyle = "#665783";
+                ctx.fillText(formatClassTime(item), x + 16, y + 61);
+                if (item.room) ctx.fillText(item.room.slice(0, 35), x + 16, y + 88);
+            });
+        });
+        const link = document.createElement("a");
+        link.download = `horario-${period}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
     });
 
-    const openDashboardClass = row => openInfoDialog(row.dataset.classTitle || row.querySelector("strong")?.textContent || "Clase", `<div class="detail-grid"><div><small>Horario</small><strong>${row.dataset.classTime || row.querySelector("small")?.textContent || "Por confirmar"}</strong></div><div><small>Ubicación</small><strong>${row.dataset.classPlace || row.querySelector("div span")?.textContent || "Por confirmar"}</strong></div></div><p>Consulta la sección Horario para revisar la programación semanal de tus asignaturas.</p><a class="outline-button" href="pages/horario.html">Abrir horario completo ›</a>`);
-    document.querySelectorAll(".class-row[data-class-title]").forEach(row=>{
-        row.addEventListener("click",()=>openDashboardClass(row));
-        row.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();openDashboardClass(row);}});
-    });
+    const openDashboardClass = row => {
+        const isHoursEvent = row.dataset.classKind === "hours";
+        const professor = !isHoursEvent && row.dataset.classProfessor ? `<div><small>Docente</small><strong>${row.dataset.classProfessor}</strong></div>` : "";
+        const date = isHoursEvent ? `<div><small>Fecha</small><strong>${row.dataset.classDate || "Fecha registrada"}</strong></div>` : "";
+        const state = isHoursEvent ? `<div><small>Inscripción</small><strong>Confirmada en tu cuenta</strong></div>` : "";
+        const message = isHoursEvent ? "Esta actividad quedó añadida a tu horario porque tienes una inscripción registrada." : "Consulta la sección Horario para revisar la programación semanal de tus asignaturas.";
+        openInfoDialog(row.dataset.classTitle || "Clase", `<div class="detail-grid"><div><small>Horario</small><strong>${row.dataset.classTime || "No registrado"}</strong></div>${date}<div><small>Ubicación</small><strong>${row.dataset.classPlace || "No registrada"}</strong></div>${state}${professor}</div><p>${message}</p><a class="outline-button" href="pages/horario.html">Abrir horario completo ›</a>`);
+    };
     document.querySelectorAll(".event-row[data-event-title]").forEach(row=>{
         const open=()=>openInfoDialog(row.dataset.eventTitle,`<p>${row.dataset.eventDescription}</p><p>Consulta el calendario académico para revisar fechas, ubicación y actualizaciones.</p><a class="outline-button" href="pages/calendario.html">Abrir calendario ›</a>`);
         row.addEventListener("click",open);row.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();open();}});
@@ -469,7 +910,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".service-card[data-service-category]").forEach(card=>card.hidden=filter!=="all"&&card.dataset.serviceCategory!==filter);
     }));
     document.querySelectorAll(".service-card[data-service-title],.recommendation-action").forEach(card=>card.addEventListener("click",event=>{
-        event.preventDefault();openInfoDialog(card.dataset.serviceTitle,`<p>${card.dataset.serviceDescription}</p><div class="service-next-step"><strong>¿Qué puedes hacer?</strong><p>Consulta los canales oficiales de la UNAB y revisa requisitos, horarios y disponibilidad antes de iniciar un trámite.</p></div>`);
+        const destination = card.getAttribute("href") || "";
+        if (card.target === "_blank" || /^https?:\/\//i.test(destination)) return;
+        event.preventDefault();
+        openInfoDialog(card.dataset.serviceTitle,`<p>${card.dataset.serviceDescription}</p><div class="service-next-step"><strong>¿Qué puedes hacer?</strong><p>Consulta los canales oficiales de la UNAB y revisa requisitos, horarios y disponibilidad antes de iniciar un trámite.</p></div>`);
     }));
 
     const leaderboardBody = document.getElementById("hoursLeaderboardBody");
@@ -481,7 +925,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Isabella Martínez", program: "Comunicación Social", hours: 12 },
             { name: "Santiago Pérez", program: "Ingeniería Industrial", hours: 11 },
             { name: "Mariana Rojas", program: "Psicología", hours: 10 },
-            { name: "Juan Pérez (Tú)", program: "Ingeniería de Sistemas", hours: weeklyHours, current: true },
+            { name: `${window.MiPortalUser?.name || "Tu cuenta"} (Tú)`, program: window.MiPortalUser?.program || "Programa no registrado", hours: weeklyHours, current: true },
             { name: "Samuel Torres", program: "Ingeniería de Mercados", hours: 8 },
             { name: "Luciana Herrera", program: "Derecho", hours: 7 },
             { name: "Andrés Castillo", program: "Ingeniería de Sistemas", hours: 6 },
@@ -505,5 +949,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const togglePassword=document.getElementById("togglePassword");const passwordInput=document.getElementById("passwordInput");
     togglePassword?.addEventListener("click",()=>{const visible=passwordInput.type==="password";passwordInput.type=visible?"text":"password";togglePassword.setAttribute("aria-label",visible?"Ocultar contraseña":"Mostrar contraseña");});
-    document.getElementById("loginForm")?.addEventListener("submit",event=>{event.preventDefault();const feedback=document.getElementById("loginFeedback");if(feedback)feedback.textContent="Esta es una demostración visual. La autenticación se conectará posteriormente.";});
 });
